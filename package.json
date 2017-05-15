@@ -1,0 +1,31 @@
+{
+  "name": "musicconnects_web",
+  "version": "0.0.1",
+  "description": "Web application for music connects, powered by devpals",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha --timeout 10000",
+    "docker_hook": "node scripts/docker_hook.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevPalsOrg/MusicConnects-web.git"
+  },
+  "author": "DevPals",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevPalsOrg/MusicConnects-web/issues"
+  },
+  "homepage": "https://github.com/DevPalsOrg/MusicConnects-web#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "config": "^1.26.1",
+    "express": "^4.15.2",
+    "mocha": "^3.3.0",
+    "mongoose": "^4.9.8",
+    "morgan": "^1.8.1",
+    "request": "^2.81.0"
+  }
+}
