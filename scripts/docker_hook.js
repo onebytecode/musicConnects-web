@@ -1,5 +1,5 @@
 var request = require('request')
-var _uri = 'https://registry.hub.docker.com/u/devpalsorg/musicconnects-web/trigger/6729851e-7695-44d4-9260-da8ddb10c956/'
+var _uri = 'https://registry.hub.docker.com/u/onebytecode/musicconnects-web/trigger/19bf93ec-1e2c-4546-a2d8-d24eb14d9462/'
 console.log('Hoocking');
 request({
   method: 'POST',
