@@ -3,14 +3,100 @@
     "$or":[
       { "id": { "$type": "number" } },
       { "name": { "$type": "string" } },
-      { "artists": { "$type": "array" } }
+      { "artists": { "$type": "array" } },
+      { "biography": { "$type": "string" } },
+      { "album": { "$type": "number" } },
+      { "tours": { "$type": "array" } },
+      { "ratings": { "$type": "array" } },
+      { "additional_info": { "$type": "string" } }
     ]
   },
   "artist": {
     "$or":[
       { "id": { "$type": "number" } },
       { "name": { "$type": "string" } },
-      { "bands": { "$type": "array" } }
+      { "surename": { "$type": "string" } },
+      { "nickname": { "$type": "string" } },
+      { "birth": { "$type": "string" } },
+      { "additional_info": { "$type": "string" } },
+      { "bands": { "$type": "array" } },
+      { "biography": { "$type": "string" } }
+    ]
+  },
+  "biography": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "years": { "$type": "string" } },
+      { "creation": { "$type": "string" } },
+      { "debut": { "$type": "string" } },
+      { "nowadays": { "$type": "string" } },
+      { "additional_info": { "$type": "string" } },
+      { "facts": { "$type": "array" } }
+    ]
+  },
+  "tour": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "year": { "$type": "number" } },
+      { "places": { "$type": "array" } },
+      { "facts": { "$type": "array" } },
+      { "birth": { "$type": "string" } },
+      { "additional_info": { "$type": "string" } }
+    ]
+  },
+  "fact": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "text": { "$type": "string" } }
+    ]
+  },
+  "album": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "group_id": { "$type": "number" } },
+      { "songs": { "$type": "array" } },
+      { "history": { "$type": "string" } },
+      { "year": { "$type": "number" } },
+      { "world_ratings": { "$type": "array" } },
+      { "facts": { "$type": "array" } },
+      { "additional_info": { "$type": "string" } }
+    ]
+  },
+  "outsorce_rating": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "last_fm": { "$type": "string" } }
+    ]
+  },
+  "song": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "year": { "$type": "number" } },
+      { "info": { "$type": "string" } },
+      { "world_ratings": { "$type": "array" } },
+      { "facts": { "$type": "array" } },
+      { "additional_info": { "$type": "string" } }
+    ]
+  },
+  "world_rating": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "name": { "$type": "string" } },
+      { "songs": { "$type": "array" } },
+      { "albums": { "$type": "array" } },
+      { "year": { "$type": "number" } }
+    ]
+  },
+  "artist": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "name": { "$type": "string" } },
+      { "surename": { "$type": "string" } },
+      { "nickname": { "$type": "string" } },
+      { "birth": { "$type": "string" } },
+      { "additional_info": { "$type": "string" } },
+      { "bands": { "$type": "array" } },
+      { "biography": { "$type": "string" } }
     ]
   }
 }

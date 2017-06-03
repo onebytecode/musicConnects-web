@@ -1,6 +1,6 @@
-const validators       = require('../db_validators.json')
-const band_validator   = validators.band
-const artist_validator = validators.artst
+// const validators       = require('../db_validators.json')
+// const band_validator   = validators.band
+// const artist_validator = validators.artst
 const MongoClient      = require('mongodb').MongoClient
 const db               = require('../db')
 var  Promise           = require('bluebird')
@@ -11,12 +11,11 @@ MongoClient.connect(db.url, (err, database) => {
   /*
         Migrations
   */
-  Promise.all([
-    require('./create_bands')(band_validator, database),
-    require('./create_artists')(band_validator, database)
-  ])
+  Promise.all(
+    require('./create_migrations')(database)
+  )
   .then( function(result) {
-    console.log(`${result}`);
+    console.log(`${result.join('\n')}`);
     database.listCollections().toArray(function(err, collInfos) {
       if (err) return err
       collInfos.forEach((el) => {
