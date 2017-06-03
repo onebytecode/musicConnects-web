@@ -1,0 +1,16 @@
+{
+  "band": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "name": { "$type": "string" } },
+      { "artists": { "$type": "array" } }
+    ]
+  },
+  "artist": {
+    "$or":[
+      { "id": { "$type": "number" } },
+      { "name": { "$type": "string" } },
+      { "bands": { "$type": "array" } }
+    ]
+  }
+}

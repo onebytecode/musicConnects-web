@@ -1,3 +1,1 @@
-define(['jquery'], ($) => {
-  
-})
+console.log(`Application required ;)`);

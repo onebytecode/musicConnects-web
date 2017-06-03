@@ -1,29 +1,28 @@
-// var app = require('express')(),
-//     port = 8080,
-//     bodyParser = require('body-parser'),
-var app = require('express')()
-var port  = 8080
-var bodyParser = require('body-parser')
+var app              = require('express')()
+var port             = 8080
+var bodyParser       = require('body-parser')
+const MongoClient    = require('mongodb').MongoClient
+const db             = require('./config/db')
 
 
+/*
+     BODY PARSER CONFIG
+*/
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
 
-app.get('/', function (req, res) {
-  // console.log('Request body is ' + req.url + ', request raw is ' + Object.keys(req))
-  res.sendFile(__dirname + '/views/index.html')
+/*
+     MONGO CONNECTION
+*/
+MongoClient.connect(db.url, (err, database) => {
+  if (err) return console.log(`ERROR :: ${err}`)
+  require('./routes')(app, database)
 })
-app.get('/bower_components/*', function (req, res) {
-  console.log('Starting ' + req.url)
-  res.sendFile(__dirname + req.url)
-})
-app.get('/scripts/*', function (req, res) {
-  console.log('Starting ' + req.url)
-  res.sendFile(__dirname + req.url)
-})
-app.listen(port, function () {
+
+
+app.listen(port, () => {
   console.log('[------ NODEJS APP RUNNING ON :8080 ------]')
 })
 
