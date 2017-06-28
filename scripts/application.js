@@ -1,1 +1,3 @@
-console.log(`Application required ;)`);
+export default () => {
+  console.log(`Access`);
+}

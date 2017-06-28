@@ -3,6 +3,9 @@ var port             = 8080
 var bodyParser       = require('body-parser')
 const MongoClient    = require('mongodb').MongoClient
 const db             = require('./config/db')
+const ENV            = process.env.NODE_ENV || 'dev'
+
+app.root = __dirname
 
 
 /*
@@ -23,7 +26,7 @@ MongoClient.connect(db.url, (err, database) => {
 
 
 app.listen(port, () => {
-  console.log('[------ NODEJS APP RUNNING ON :8080 ------]')
+  console.log(`=============== APP RUNNING ON ${port} ==========\n===== ENV IS ${ENV}`)
 })
 
 module.exports = app
