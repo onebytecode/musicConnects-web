@@ -1,6 +1,3 @@
-// const validators       = require('../db_validators.json')
-// const band_validator   = validators.band
-// const artist_validator = validators.artst
 const MongoClient      = require('mongodb').MongoClient
 const db               = require('../db')
 var  Promise           = require('bluebird')

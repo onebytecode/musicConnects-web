@@ -54,7 +54,8 @@ module.exports  =  {
   plugins: [
     new webpack.ProvidePlugin({
       $:      "jquery/dist/jquery.min.js",
-      jQuery: "jquery/dist/jquery.min.js"
+      jQuery: "jquery/dist/jquery.min.js",
+      React: 'react'
     }),
     UglifyJsPluginConfig,
     CompressionPluginConfig,

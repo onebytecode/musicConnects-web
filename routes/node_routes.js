@@ -4,6 +4,7 @@ const ROOT = app.root
         GET
   */
   app.get('/', function (req, res) {
+    console.log(`Starting /`);
     res.sendFile(ROOT + '/views/index.html')
   })
   app.get('/main.js', function (req, res) {

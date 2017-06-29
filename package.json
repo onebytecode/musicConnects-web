@@ -27,6 +27,7 @@
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
+    "colors": "^1.1.2",
     "compression": "^1.6.2",
     "compression-webpack-plugin": "^0.4.0",
     "config": "^1.26.1",
@@ -50,8 +51,8 @@
     "resolve-url-loader": "^2.0.2",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.1",
-    "url-loader": "^0.5.8",
     "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony-v2.8.22",
+    "url-loader": "^0.5.8",
     "webpack": "2.6.1",
     "webpack-livereload-plugin": "^0.11.0"
   },
