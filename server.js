@@ -6,7 +6,8 @@ const db             = require('./config/db')
 const ENV            = process.env.NODE_ENV || 'dev'
 const logger         = require('./logging')
 
-app.root = __dirname
+app.root    = __dirname
+app.logger  =  logger
 
 
 /*
