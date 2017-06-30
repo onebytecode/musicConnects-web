@@ -1,17 +1,32 @@
 const MAIN_ROUTES  =  { equal: '/\/(\w+\.)*/', path: './main' }
 const ARTIST_ROUTES  =  { equal: '', path: './artist' }
 
-const analyseRoute  =  (request, response, app, db) => {
-  const route = request.path
-  console.log(route);
-  console.log(/\/(\w+\.*)*/g.test(route))
-  if (/\/(\w+\.)*/.test(route)) { // Catches all like / | /main.js etc.
-    return require(MAIN_ROUTES.path)(request, response, app, db)
-  }
-  return response.sendStatus(500)
-}
+
 module.exports = (app, db) => {
   app.get('/*', (req, res) => {
-    analyseRoute(req, res , app, db)
+    console.log(`Starting ${req.path}`);
+    const firstSectionOfPath = req.path.match(/\/\w*/)[0]
+    switch(firstSectionOfPath) {
+      case '/': return getMain(req, res, app, db) // GET /
+      case '/public': return getResources(req, res, app, db) // GET /public/*
+
+      default: return res.sendStatus(500)
+
+    }
   })
+}
+
+
+/*
+    GET /
+*/
+const getMain = (req, res, app, db) => {
+  require('./main')(req, res, app, db)
+}
+
+/*
+    GET /public/
+*/
+const getResources = (req, res, app, db) => {
+  require('./resources')(req, res, app, db)
 }
