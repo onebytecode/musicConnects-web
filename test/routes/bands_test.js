@@ -1,4 +1,5 @@
 module.exports = (server, chai, should, expect) => {
+  
   describe('Get bands', () => {
     it('it should get bands', done => {
       chai.request(server)

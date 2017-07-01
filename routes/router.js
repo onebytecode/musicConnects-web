@@ -4,7 +4,6 @@ const ARTIST_ROUTES  =  { equal: '', path: './artist' }
 
 module.exports = (app, db) => {
   app.get('/*', (req, res) => {
-    console.log(`Starting ${req.path}`);
     const firstSectionOfPath = req.path.match(/\/\w*/)[0]
     switch(firstSectionOfPath) {
       case '/': return getMain(req, res, app, db) // GET /

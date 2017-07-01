@@ -44,6 +44,8 @@
     "jquery-prioritize": "^1.1.7",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
+    "mongodb": "^2.2.29",
+    "mongoose": "^4.10.8",
     "node-sass": "^4.5.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -57,15 +59,14 @@
     "webpack-livereload-plugin": "^0.11.0"
   },
   "devDependencies": {
-    "mocha": "^3.3.0",
-    "nodemon": "^1.11.0",
-    "mongoose": "^4.9.8",
-    "morgan": "^1.8.1",
-    "chai": "^3.5.0",
-    "chai-http": "^3.0.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.5.1",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.3.0",
+    "morgan": "^1.8.2",
+    "nodemon": "^1.11.0",
     "uglifyjs-webpack-plugin": "^0.4.3"
   }
 }
