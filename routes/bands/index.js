@@ -1,3 +1,3 @@
-module.exports = (request, response, app, db) => {
-  require('./bands_routes.js')(request, response, app)
+module.exports = (request, response, app, method) => {
+  require('./bands_routes.js')(request, response, app, method)
 }

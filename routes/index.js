@@ -1,3 +1,3 @@
-module.exports = function(app, db) {
-  require('./router')(app, db)
+module.exports = function(app) {
+  require('./router')(app)
 }
