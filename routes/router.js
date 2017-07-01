@@ -9,6 +9,7 @@ module.exports = (app, db) => {
     switch(firstSectionOfPath) {
       case '/': return getMain(req, res, app, db) // GET /
       case '/public': return getResources(req, res, app, db) // GET /public/*
+      case '/bands': return getBands(req, res, app) // GET /bands
 
       default: return res.sendStatus(500)
 
@@ -23,10 +24,14 @@ module.exports = (app, db) => {
 const getMain = (req, res, app, db) => {
   require('./main')(req, res, app, db)
 }
-
 /*
     GET /public/
 */
 const getResources = (req, res, app, db) => {
   require('./resources')(req, res, app, db)
+}
+
+// GET /bands
+const getBands = (req, res, app) => {
+  require('./bands')(req, res, app)
 }

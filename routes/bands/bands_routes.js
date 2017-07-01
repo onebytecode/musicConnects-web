@@ -1,5 +1,10 @@
 module.exports = (req, res, app) => {
-  const Bands = app.models().getBands().all()
-  console.log(Bands);
-  res.sendStatus(200)
+  app.models().Bands.all.then((success) => {
+    console.log(success);
+    res.sendStatus(200)
+  }, (err) => {
+    console.log(err);
+    res.sendStatus(500)
+  })
+  // res.sendStatus(200)
 }

@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+module.exports = (req, res, app) => {
   const ROOT  =  app.root
   const path  =  req.path
 

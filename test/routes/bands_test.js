@@ -1,10 +1,8 @@
 module.exports = (server, chai, should, expect) => {
-
-  // GET REQUESTS FOR MAIN PAGE
-  describe('Get main page', () => {
-    it('it should get status OK', done => {
+  describe('Get bands', () => {
+    it('it should get bands', done => {
       chai.request(server)
-        .get('/')
+        .get('/bands')
         .end((err, res) => {
           res.should.have.status(200)
           done()
