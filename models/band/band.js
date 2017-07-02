@@ -1,7 +1,7 @@
 module.exports = (mongoose, autoIncrement) => {
   const {Schema}  =  mongoose
   const bandSchema = new Schema({
-    id: Number,
+    id: { type: Number, required: true },
     name: String,
     artists: Array,
     biography: String,
@@ -11,11 +11,13 @@ module.exports = (mongoose, autoIncrement) => {
     additional_info: Array
   })
 
-  const Band  =  mongoose.model('band', bandSchema)
   bandSchema.plugin(autoIncrement.plugin, {
     model: 'band',
-    field: 'id'
+    field: 'id',
+    startAt: 1
   })
+  const Band  =  mongoose.model('band', bandSchema)
+
 
   return Band
 }

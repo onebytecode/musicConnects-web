@@ -17,10 +17,12 @@ module.exports = (server, chai, should, expect) => {
           .post('/bands')
           .send({
             'band': {
+              'id': '1',
               'name': 'metallica'
             }
           })
           .end((err, res) => {
+            if (err) console.log(err);
             res.should.have.status(200)
             done()
           })
@@ -56,6 +58,41 @@ module.exports = (server, chai, should, expect) => {
             done()
           })
       })
+    })
+  })
+  describe('Update bands', () => {
+    it('it should add biography to band with id 1', done => {
+      chai.request(server)
+        .put('/bands/1')
+        .send({
+          'band': {
+            'id': '1',
+            'name': 'metallica updated',
+            'biography': 'metal group'
+          }
+        })
+        .end((err, res) => {
+          res.should.have.status(200)
+          done()
+        })
+    })
+  })
+  describe('Delete bands', () => {
+    it('it should delete band with id 1', done => {
+      chai.request(server)
+        .delete('/bands/1')
+        .end((err, res) => {
+          res.should.have.status(200)
+          done()
+        })
+    })
+    it('it should give error 500', done => {
+      chai.request(server)
+        .get('/bands/1')
+        .end((err, res) => {
+          res.should.have.status(500)
+          done()
+        })
     })
   })
 }
