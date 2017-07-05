@@ -4,7 +4,7 @@ module.exports  =  (models) => {
   const { Bands }  =  models
 
   const controllers = {
-    bands: require('./bands')(Bands)
+    bands_controller: require('./bands')(Bands)
   }
   return controllers
 }

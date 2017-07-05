@@ -1,49 +1,43 @@
-module.exports = (req, res, app, method) => {
+module.exports = (req, res, bands_controller, method) => {
   const GET     =  'GET'
   const POST    =  'POST'
   const DELETE  =  'DELETE'
   const PUT     =  'PUT'
   switch(method) {
-    case GET: return getBandById(req, res, app)
-    case POST: return postBand(req, res, app)
-    case DELETE: return deleteBand(req, res, app)
-    case PUT: return updateBand(req, res, app)
+    case GET: return getBandById(req, res, bands_controller)
+    case POST: return postBand(req, res, bands_controller)
+    case DELETE: return deleteBand(req, res, bands_controller)
+    case PUT: return updateBand(req, res, bands_controller)
   }
 
 }
 // GET
-const getBandById = (req, res, app) => {
+const getBandById = (req, res, controller) => {
   let ID  =  req.path.match(/\/\w+/g)[1]
   if (!ID) return res.sendStatus(400)
   ID = ID.replace(/\//, '')
   if (!parseInt(ID)) {
     return res.sendStatus(400)
   }
-  const { Bands }  =  app.models
-  Bands.find({ id: ID }, (err, band) => {
-    if (err || !band[0]) {
-      return res.sendStatus(500)
-    } else {
-      res.sendStatus(200)
-      console.log(band);
-    }
+  controller.get({ id: ID }, (err, band) => {
+    console.log(err, band);
+    if (err) return res.sendStatus(500)
+    return res.sendStatus(200)
   })
 }
 // POST
-const postBand = (req, res, app) => {
+const postBand = (req, res, controller) => {
   const reqPathParsed  =  req.path.match(/\/\w+/g)
   if (reqPathParsed[1]) return res.sendStatus(400)
   if (!req.body.band) return res.sendStatus(400)
   const newBand  =  req.body.band
-  const { Bands }  =  app.models
-  Bands(newBand).save((err, band) => {
+  controller.create(newBand, (err, band) => {
     if (err) return res.sendStatus(500)
-    console.log(band);
-    res.sendStatus(200)
+    return res.sendStatus(200)
   })
 }
 // UPDATE
-const updateBand  =  (req, res, app) => {
+const updateBand  =  (req, res, controller) => {
   let ID  =  req.path.match(/\/\w+/g)[1]
   if (!ID) return res.sendStatus(400)
   ID = ID.replace(/\//, '')
@@ -51,25 +45,23 @@ const updateBand  =  (req, res, app) => {
   if (!parseInt(ID)) {
     return res.sendStatus(400)
   }
-  const { Bands }  =  app.models
-  Bands.where({ id: ID }).update(updateParams, (err, result) => {
+  controller.update(updateParams,  (err, doc) => {
+    console.log(err, doc);
     if (err) return res.sendStatus(500)
-    console.log(result);
     return res.sendStatus(200)
   })
 }
 
-const deleteBand = (req, res, app) => {
+const deleteBand = (req, res, controller) => {
   let ID  =  req.path.match(/\/\w+/g)[1]
   if (!ID) return res.sendStatus(400)
   ID = ID.replace(/\//, '')
   if (!parseInt(ID)) {
     return res.sendStatus(400)
   }
-  const { Bands }  =  app.models
-  Bands.findOneAndRemove({ id: ID}, (err, result) => {
+  controller.delete({ id: ID }, (err, doc) => {
+    console.log(err, doc);
     if (err) return res.sendStatus(500)
-    console.log(result);
-    res.sendStatus(200)
+    return res.sendStatus(200)
   })
 }

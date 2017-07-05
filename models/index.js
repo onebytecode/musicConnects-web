@@ -1,5 +1,5 @@
-module.exports = () => {
-  const { mongoose, autoIncrement }  =  require('../db')()
+module.exports = (db) => {
+  const { mongoose, autoIncrement }  =  db
 
   const getBands = () => {
     return require('./band')(mongoose, autoIncrement)

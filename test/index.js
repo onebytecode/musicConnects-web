@@ -1,10 +1,10 @@
 const server       = require('../server')
 const models       = server.models
+const controllers  = server.controllers
 const chai         = require('chai')
 const chai_http    = require('chai-http')
 const should       = chai.should()
 const expect       = chai.expect
-const controllers  = require('../controllers')(models)
 const Promise      = require('bluebird')
 const db           = require('../db')()
 

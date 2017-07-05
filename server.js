@@ -4,10 +4,14 @@ var bodyParser       = require('body-parser')
 const ENV            = process.env.NODE_ENV || 'dev'
 const logger         = require('./logging')
 const morgan         = require('morgan')
+const db             = require('./db')()
+const models         = require('./models')(db)
+const controllers    = require('./controllers')(models)
 
 app.root    = __dirname
 app.logger  =  logger
-app.models  =  require('./models')()
+app.models  =  models
+app.controllers = controllers
 
 // DB CONNECTION
 require('./db')().connect.then(

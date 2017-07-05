@@ -22,7 +22,6 @@ module.exports = (server, chai, should, expect) => {
             }
           })
           .end((err, res) => {
-            if (err) console.log(err);
             res.should.have.status(200)
             done()
           })
@@ -76,6 +75,14 @@ module.exports = (server, chai, should, expect) => {
           done()
         })
     })
+    it('it should get updated band', done => {
+      chai.request(server)
+        .get('/bands/1')
+        .end((err,res) => {
+          res.should.have.status(200)
+          done()
+        })
+    })
   })
   describe('Delete bands', () => {
     it('it should delete band with id 1', done => {
@@ -86,11 +93,11 @@ module.exports = (server, chai, should, expect) => {
           done()
         })
     })
-    it('it should give error 500', done => {
+    it('it should give 200', done => {
       chai.request(server)
         .get('/bands/1')
         .end((err, res) => {
-          res.should.have.status(500)
+          res.should.have.status(200)
           done()
         })
     })
