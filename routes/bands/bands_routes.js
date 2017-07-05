@@ -29,7 +29,7 @@ const getBandById = (req, res, app) => {
     }
   })
 }
-
+// POST
 const postBand = (req, res, app) => {
   const reqPathParsed  =  req.path.match(/\/\w+/g)
   if (reqPathParsed[1]) return res.sendStatus(400)

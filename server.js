@@ -9,6 +9,16 @@ app.root    = __dirname
 app.logger  =  logger
 app.models  =  require('./models')()
 
+// DB CONNECTION
+require('./db')().connect.then(
+  success => {
+    console.log(`Connection to db status ${success.status}`);
+    require('./routes')(app)
+  }, error => {
+    console.log(`Connection to db status ${error.status}`);
+  }
+)
+
 /*
      BODY PARSER CONFIG
 */
@@ -18,10 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
 
-/*
-     MONGO CONNECTION
-*/
-require('./routes')(app)
+// require('./routes')(app)
 
 
 
