@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
 
+
 app.listen(port, () => {
   logger(`Server running on :: ${port}`, '', 'GOOD')
   logger(`Node enviroment is ${ENV}`, '', 'GOOD')
