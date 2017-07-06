@@ -4,7 +4,7 @@
   "description": "Web application for music connects, powered by onebytecode",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --timeout 10000",
+    "test": "NODE_ENV=test mocha --timeout 10000 --compilers js:babel-core/register",
     "docker_hook": "node scripts/docker_hook.js",
     "webrack": "NODE_ENV=production webpack -p",
     "webrack_dev": "NODE_ENV=dev webpack --colors --progress --watch",
