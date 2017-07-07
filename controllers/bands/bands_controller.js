@@ -1,24 +1,25 @@
 // BANDS CONTROLLER
 const Promise  =  require('bluebird')
+const { crud_helper }  =  require('../helpers')()
 module.exports  =  (bands) => {
   const getBand  =  (params, callback) => {
-    bands.findOne({ id: params.id }, (err, band) => {
-      return callback(err, band)
+    return crud_helper.get(bands, params, (err, model) => {
+      return callback(err, model)
     })
   }
   const createBand = (params, callback) => {
-    bands(params).save((err, band) => {
-      return callback(err, band)
+    return crud_helper.create(bands, params, (err, model) => {
+      return callback(err, model)
     })
   }
   const updateBand  =  (params, callback) => {
-    bands.findOneAndUpdate({ id: params.id }, params, (err, doc) => {
-      return callback(err, doc)
+    return crud_helper.update(bands, params, (err, model) => {
+      return callback(err, model)
     })
   }
   const deleteBand  =  (params, callback) => {
-    bands.findOneAndRemove({ id: params.id }, (err, doc) => {
-      return callback(err, doc)
+    return crud_helper.delete(bands, params, (err, model) => {
+      return callback(err, model)
     })
   }
 

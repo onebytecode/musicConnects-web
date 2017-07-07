@@ -5,6 +5,7 @@ module.exports = (mongoose, autoIncrement) => {
     name: String,
     artists: Array,
     biography: String,
+    years: String,
     albums: Array,
     tours: Array,
     ratings: Array,
