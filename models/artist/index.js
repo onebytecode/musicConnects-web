@@ -1,3 +1,3 @@
 module.exports = (mongoose, autoIncrement) => {
-  require('./artist_model')(mongoose, autoIncrement)
+  return require('./artist_model')(mongoose, autoIncrement)
 }

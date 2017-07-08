@@ -1,9 +1,9 @@
 // ARTISTS CONTROLLER
 const Promise  =  require('bluebird')
 const { crud_helper }  =  require('../helpers')()
-module.exports  =  (artsits) => {
+module.exports  =  (artists) => {
   const getArtist  =  (params, callback) => {
-    return crud_helper.get(artsits, params, (err, res) => {
+    return crud_helper.get(artists, params, (err, res) => {
       return callback(err, res)
     })
   }
@@ -13,7 +13,7 @@ module.exports  =  (artsits) => {
     })
   }
   const updateArtist  =  (params, callback) => {
-    return crud_helper.create(artists, params, (err, res) => {
+    return crud_helper.update(artists, params, (err, res) => {
       return callback(err, res)
     })
   }
