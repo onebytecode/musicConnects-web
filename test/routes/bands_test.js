@@ -33,7 +33,7 @@ module.exports = (server, chai, should, expect) => {
     describe('Get bands wrong', () => {
       it('it should get status 400', done => {
         chai.request(server)
-          .get('/bands')
+          .get('/band/')
           .end((err, res) => {
             res.should.have.status(400)
             done()
@@ -41,7 +41,7 @@ module.exports = (server, chai, should, expect) => {
       })
       it('it should get status 400', done => {
         chai.request(server)
-          .get('/bands/perviy')
+          .get('/band/perviy')
           .end((err, res) => {
             res.should.have.status(400)
             done()
@@ -51,7 +51,7 @@ module.exports = (server, chai, should, expect) => {
     describe('Get bands right', () => {
       it('it should get band with id:1', done => {
         chai.request(server)
-          .get('/bands/1')
+          .get('/band/1')
           .end((err, res) => {
             res.should.have.status(200)
             done()
@@ -95,7 +95,7 @@ module.exports = (server, chai, should, expect) => {
     })
     it('it should give 200', done => {
       chai.request(server)
-        .get('/bands/1')
+        .get('/band/1')
         .end((err, res) => {
           res.should.have.status(200)
           done()

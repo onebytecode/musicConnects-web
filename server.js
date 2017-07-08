@@ -3,18 +3,21 @@ var port             = 8080
 var bodyParser       = require('body-parser')
 const ENV            = process.env.NODE_ENV || 'dev'
 const logger         = require('./logging')
+const config         = require('./config')()
 const morgan         = require('morgan')
-const db             = require('./db')()
+const db             = require('./db')(config.db)
 const models         = require('./models')(db)
 const controllers    = require('./controllers')(models)
 
-app.root    = __dirname
-app.logger  =  logger
-app.models  =  models
+app.root        = __dirname
+app.logger      =  logger
+app.models      =  models
 app.controllers = controllers
+app.config      =  config
+app.db          =  db
 
 // DB CONNECTION
-require('./db')().connect.then(
+app.db.connect.then(
   success => {
     console.log(`Connection to db status ${success.status}`);
     require('./routes')(app)

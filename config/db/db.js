@@ -8,7 +8,10 @@ const getUrl = () => {
   }
 }
 
-const db = {
-  url: getUrl()
+module.exports = () => {
+  const db = {
+    url: getUrl()
+  }
+  console.log(db);
+  return db
 }
-module.exports = db

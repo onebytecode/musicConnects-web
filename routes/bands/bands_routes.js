@@ -14,6 +14,7 @@ module.exports = (req, res, bands_controller, method) => {
 // GET
 const getBandById = (req, res, controller) => {
   let ID  =  req.path.match(/\/\w+/g)[1]
+  console.log(`!!! ID ${ID}`);
   if (!ID) return res.sendStatus(400)
   ID = ID.replace(/\//, '')
   if (!parseInt(ID)) {

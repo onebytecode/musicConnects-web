@@ -7,12 +7,23 @@ const PUT            =  'PUT'
 
 
 module.exports = (app) => {
+  //  /bands
+  const getBands = (req, res, app, method) => {
+    require('./bands')(req, res, app, method)
+  }
+  const modelsProviders = {
+    band: getBands
+  }
+  const { allowed_models } = app.config
   app.get('/*', (req, res) => {
     const firstSectionOfPath = req.path.match(/\/\w*/)[0]
+    const nameOfSection      = firstSectionOfPath.replace(/\//, '')
+    const model_meta  =  allowed_models.filter((model) => { return model.routes.get === firstSectionOfPath })
+    if (model_meta.length === 1) return modelsProviders[model_meta[0].name](app, req, res, GET)
+    console.log(`Not returned`);
     switch(firstSectionOfPath) {
       case '/': return getMain(req, res, app,) // GET /
       case '/public': return getResources(req, res, app) // GET /public/*
-      case '/bands': return getBands(req, res, app, GET) // GET /bands
 
       default: return res.sendStatus(500)
 
@@ -57,9 +68,4 @@ const getMain = (req, res, app) => {
 */
 const getResources = (req, res, app) => {
   require('./resources')(req, res, app)
-}
-
-//  /bands
-const getBands = (req, res, app, method) => {
-  require('./bands')(req, res, app, method)
 }
