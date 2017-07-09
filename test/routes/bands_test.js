@@ -14,7 +14,7 @@ module.exports = (server, chai, should, expect) => {
     describe('Post bands with right path', () => {
       it('it should get status 200', done => {
         chai.request(server)
-          .post('/bands')
+          .post('/bands/')
           .send({
             'band': {
               'id': '1',
@@ -62,7 +62,7 @@ module.exports = (server, chai, should, expect) => {
   describe('Update bands', () => {
     it('it should add biography to band with id 1', done => {
       chai.request(server)
-        .put('/bands/1')
+        .put('/band/1')
         .send({
           'band': {
             'id': '1',
@@ -77,7 +77,7 @@ module.exports = (server, chai, should, expect) => {
     })
     it('it should get updated band', done => {
       chai.request(server)
-        .get('/bands/1')
+        .get('/band/1')
         .end((err,res) => {
           res.should.have.status(200)
           done()
@@ -87,7 +87,7 @@ module.exports = (server, chai, should, expect) => {
   describe('Delete bands', () => {
     it('it should delete band with id 1', done => {
       chai.request(server)
-        .delete('/bands/1')
+        .delete('/band/1')
         .end((err, res) => {
           res.should.have.status(200)
           done()

@@ -8,8 +8,8 @@ const PUT            =  'PUT'
 
 module.exports = (app) => {
   //  /bands
-  const getBands = (req, res, app, method) => {
-    require('./bands')(req, res, app, method)
+  const getBands = (app, req, res, method) => {
+    require('./bands')(app, req, res, method)
   }
   const modelsProviders = {
     band: getBands
@@ -20,7 +20,6 @@ module.exports = (app) => {
     const nameOfSection      = firstSectionOfPath.replace(/\//, '')
     const model_meta  =  allowed_models.filter((model) => { return model.routes.get === firstSectionOfPath })
     if (model_meta.length === 1) return modelsProviders[model_meta[0].name](app, req, res, GET)
-    console.log(`Not returned`);
     switch(firstSectionOfPath) {
       case '/': return getMain(req, res, app,) // GET /
       case '/public': return getResources(req, res, app) // GET /public/*
@@ -31,28 +30,21 @@ module.exports = (app) => {
   })
   app.post('/*', (req, res) => {
     const firstSectionOfPath = req.path.match(/\/\w*/)[0]
-    switch(firstSectionOfPath) {
-      case '/bands': return getBands(req, res, app, POST)
-
-      default: return res.sendStatus(500)
-
-    }
+    const model_meta  =  allowed_models.filter((model) => { return model.routes.create === firstSectionOfPath })
+    if (model_meta.length === 1) return modelsProviders[model_meta[0].name](app, req, res, POST)
+    return res.sendStatus(400)
   })
   app.delete('/*', (req, res) => {
     const firstSectionOfPath = req.path.match(/\/\w*/)[0]
-    switch(firstSectionOfPath) {
-      case '/bands': return getBands(req, res, app, DELETE)
-
-      default: return res.sendStatus(400)
-    }
+    const model_meta  =  allowed_models.filter((model) => { return model.routes.delete === firstSectionOfPath })
+    if (model_meta.length === 1) return modelsProviders[model_meta[0].name](app, req, res, DELETE)
+    return res.sendStatus(400)
   })
   app.put('/*', (req, res) => {
     const firstSectionOfPath = req.path.match(/\/\w*/)[0]
-    switch(firstSectionOfPath) {
-      case '/bands': return getBands(req, res, app, PUT)
-
-      default: return res.sendStatus(400)
-    }
+    const model_meta  =  allowed_models.filter((model) => { return model.routes.update === firstSectionOfPath })
+    if (model_meta.length === 1) return modelsProviders[model_meta[0].name](app, req, res, PUT)
+    return res.sendStatus(400)
   })
 }
 
