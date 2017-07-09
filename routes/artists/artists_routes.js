@@ -1,4 +1,4 @@
-module.exports = (bands_controller, req, res, method) => {
+module.exports = (artists_controller, req, res, method) => {
   const GET     =  'GET'
   const POST    =  'POST'
   const DELETE  =  'DELETE'

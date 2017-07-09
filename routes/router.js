@@ -7,10 +7,7 @@ const PUT            =  'PUT'
 
 
 module.exports = (app) => {
-  //  /bands
-  const getBands = (app, req, res, method) => {
-    require('./bands')(app, req, res, method)
-  }
+
   const modelsProviders = {
     band: getBands
   }
@@ -60,4 +57,12 @@ const getMain = (req, res, app) => {
 */
 const getResources = (req, res, app) => {
   require('./resources')(req, res, app)
+}
+//  /bands
+const getBands = (app, req, res, method) => {
+  require('./bands')(app, req, res, method)
+}
+// /artists
+const getArtists = (app, req, res, method) => {
+  require('./artists')(app, req, res, method)
 }
