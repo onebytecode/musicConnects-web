@@ -1,6 +1,6 @@
 module.exports = () => {
   const get  =  (model, params, callback) => {
-    model.findOne({ id: params.id }, (err, _model) => {
+    model.findOne({ _id: params._id }, (err, _model) => {
       return callback(err, _model)
     })
   }
@@ -10,12 +10,12 @@ module.exports = () => {
     })
   }
   const update  =  (model, params, callback) => {
-    model.findOneAndUpdate({ id: params.id }, params, (err, doc) => {
+    model.findOneAndUpdate({ _id: params._id }, params, (err, doc) => {
       return callback(err, doc)
     })
   }
   const _delete  =  (model, params, callback) => {
-    model.findOneAndRemove({ id: params.id }, (err, doc) => {
+    model.findOneAndRemove({ _id: params._id }, (err, doc) => {
       return callback(err, doc)
     })
   }

@@ -19,7 +19,7 @@ const getBandById = (req, res, controller) => {
   if (!parseInt(ID)) {
     return res.sendStatus(400)
   }
-  controller.get({ id: ID }, (err, band) => {
+  controller.get({ _id: ID }, (err, band) => {
     if (err) return res.sendStatus(500)
     return res.sendStatus(200)
   })
@@ -49,7 +49,7 @@ const updateBand  =  (req, res, controller) => {
     return res.sendStatus(200)
   })
 }
-
+// DELETE
 const deleteBand = (req, res, controller) => {
   let ID  =  req.path.match(/\/\w+/g)[1]
   if (!ID) return res.sendStatus(400)
@@ -57,7 +57,7 @@ const deleteBand = (req, res, controller) => {
   if (!parseInt(ID)) {
     return res.sendStatus(400)
   }
-  controller.delete({ id: ID }, (err, doc) => {
+  controller.delete({ _id: ID }, (err, doc) => {
     if (err) return res.sendStatus(500)
     return res.sendStatus(200)
   })
