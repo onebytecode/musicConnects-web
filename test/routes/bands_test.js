@@ -1,23 +1,13 @@
 module.exports = (server, chai, should, expect) => {
 
   describe('Post /bands', () => {
-    describe('Post bands with wrong path', () => {
-      it('it should get 400', done => {
-        chai.request(server)
-          .post('/bands/1')
-          .end((err, res) => {
-            res.should.have.status(400)
-            done()
-          })
-      })
-    })
     describe('Post bands with right path', () => {
       it('it should get status 200', done => {
         chai.request(server)
           .post('/bands/')
           .send({
             'band': {
-              'id': '1',
+              '_id': '1',
               'name': 'metallica'
             }
           })
@@ -35,7 +25,7 @@ module.exports = (server, chai, should, expect) => {
         chai.request(server)
           .get('/band/')
           .end((err, res) => {
-            res.should.have.status(400)
+            res.should.have.status(404)
             done()
           })
       })
@@ -93,11 +83,11 @@ module.exports = (server, chai, should, expect) => {
           done()
         })
     })
-    it('it should give 200', done => {
+    it('it should give 404', done => {
       chai.request(server)
         .get('/band/1')
         .end((err, res) => {
-          res.should.have.status(200)
+          res.should.have.status(404)
           done()
         })
     })

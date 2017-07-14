@@ -1,3 +1,3 @@
-module.exports = (request, response, app, db) => {
-  return require('./main_routes.js')(request, response, app, db)
+module.exports = (request, response) => {
+  return require('./main_routes')(request, response)
 }

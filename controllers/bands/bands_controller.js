@@ -9,6 +9,7 @@ module.exports  =  (bands) => {
   }
   const createBand = (params, callback) => {
     return crud_helper.create(bands, params, (err, model) => {
+      console.log(model);
       return callback(err, model)
     })
   }

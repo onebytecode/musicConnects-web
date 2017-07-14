@@ -1,3 +1,3 @@
-module.exports = (req, res, app, db) => {
-  require('./resources_routes')(req, res, app, db)
+module.exports = (req, res) => {
+  require('./resources_routes')(req, res)
 }

@@ -1,3 +1,3 @@
-module.exports =  (app) => {
-  require('./router')(app)
+module.exports =  (router, controllers) => {
+  require('./router')(router, controllers)
 }

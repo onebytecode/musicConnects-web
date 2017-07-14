@@ -1,6 +1,7 @@
 module.exports = () => {
   const get  =  (model, params, callback) => {
-    model.findOne({ _id: params._id }, (err, _model) => {
+    console.log(params);
+    model.findOne(params, (err, _model) => {
       return callback(err, _model)
     })
   }

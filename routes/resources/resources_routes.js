@@ -1,7 +1,5 @@
-module.exports = (req, res, app) => {
-  const ROOT  =  app.root
-  const path  =  req.path
+module.exports = (req, res) => {
 
   res.setHeader("content-encoding", "gzip")
-  res.sendFile(ROOT + req.path)
+  res.sendFile(req.app.root + req.path)
 }

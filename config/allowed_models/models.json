@@ -2,7 +2,7 @@
   {
     "name":"band",
     "routes":  {
-        "get": "/band" ,
+        "get": "/band/:id" ,
         "create": "/bands",
         "update": "/band",
         "delete": "/band"
