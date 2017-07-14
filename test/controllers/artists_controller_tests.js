@@ -3,11 +3,14 @@ module.exports  =  (artists_controller, should, expect) => {
     it('it should create artist', done => {
       artists_controller.create({
         _id: 1,
-        name: 'Guns and Roses'
+        name: {
+          firstName: 'Mick',
+          secondName: 'Jagger'
+        }
       }, (err, artist) => {
         expect(err).to.be.equal(null)
         artist.should.be.a('object')
-        artist.name.should.be.equal('Guns and Roses')
+        artist.fullName.should.be.equal('Mick Jagger')
         done()
       })
     })
@@ -17,14 +20,18 @@ module.exports  =  (artists_controller, should, expect) => {
       }, (err, artist) => {
         expect(err).to.be.equal(null)
         artist._id.should.be.equal(1)
-        artist.name.should.be.equal('Guns and Roses')
+        artist.fullName.should.be.equal('Mick Jagger')
         done()
       })
     })
     it('it should update artist', done => {
       artists_controller.update({
         _id: 1,
-        name: 'Updated Guns and Roses'
+        name: {
+          firstName: 'Saul',
+          secondName: 'Hudson',
+          sureName: 'Slash'
+        }
       }, (err, doc) => {
         expect(err).to.be.equal(null)
         doc._id.should.be.equal(1)
@@ -37,7 +44,8 @@ module.exports  =  (artists_controller, should, expect) => {
       }, (err, artist) => {
         expect(err).to.be.equal(null)
         artist._id.should.be.equal(1)
-        artist.name.should.be.equal('Updated Guns and Roses')
+        artist.fullName.should.be.equal('Saul Hudson')
+        artist.name.sureName.should.be.equal('Slash')
         done()
       })
     })

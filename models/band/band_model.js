@@ -13,11 +13,11 @@ module.exports = (mongoose, autoIncrement) => {
   })
 
   bandSchema.plugin(autoIncrement.plugin, {
-    model: 'band',
+    model: 'Band',
     field: '_id',
     startAt: 1
   })
-  const Band  =  mongoose.model('band', bandSchema)
+  const Band  =  mongoose.model('Band', bandSchema)
 
 
   return Band
