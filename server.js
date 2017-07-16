@@ -5,11 +5,14 @@ const port           = 8080
 const bodyParser     = require('body-parser')
 const ENV            = process.env.NODE_ENV || 'dev'
 const logger         = require('./logging')
-const config         = require('./config')()
 const morgan         = require('morgan')
+const configBundle   = {
+  secretsPath: __dirname + '/secrets.obc'
+}
+const config         = require('./config')(configBundle)
 const db             = require('./db')(config.db)
 const models         = require('./models')(db)
-const controllers    = require('./controllers')(models)
+const controllers    = require('./controllers')(models, config.secrets, config.links)
 
 app.root        =  __dirname
 app.logger      =  logger
@@ -17,8 +20,6 @@ app.models      =  models
 app.controllers =  controllers
 app.config      =  config
 app.db          =  db
-
-
 /*
      BODY PARSER CONFIG
 */

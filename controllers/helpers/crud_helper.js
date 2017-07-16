@@ -11,7 +11,7 @@ module.exports = () => {
     })
   }
   const update  =  (model, params, callback) => {
-    model.findOneAndUpdate({ _id: params._id }, params, (err, doc) => {
+    model.findOneAndUpdate({ _id: params._id }, params, { new: true }, (err, doc) => {
       return callback(err, doc)
     })
   }

@@ -70,6 +70,8 @@ module.exports = (server, chai, should, expect) => {
         .get('/band/1')
         .end((err,res) => {
           res.should.have.status(200)
+          res.body._id.should.be.equal(1)
+          res.body.name.should.be.equal('metallica')
           done()
         })
     })

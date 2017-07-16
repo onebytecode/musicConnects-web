@@ -7,9 +7,13 @@ module.exports = (db) => {
   const getArtists = () => {
     return require('./artist')(mongoose, autoIncrement)
   }
+  const getUsers = () => {
+    return require('./user')(mongoose, autoIncrement)
+  }
   const models = {
     Bands: getBands(),
-    Artists: getArtists()
+    Artists: getArtists(),
+    Users: getUsers()
   }
   return models
 }

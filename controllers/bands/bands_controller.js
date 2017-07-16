@@ -1,7 +1,7 @@
 // BANDS CONTROLLER
 const Promise  =  require('bluebird')
-const { crud_helper }  =  require('../helpers')()
-module.exports  =  (bands) => {
+module.exports  =  (bands, helpers) => {
+  const { crud_helper }  =  helpers
   const getBand  =  (params, callback) => {
     return crud_helper.get(bands, params, (err, model) => {
       return callback(err, model)
@@ -9,7 +9,6 @@ module.exports  =  (bands) => {
   }
   const createBand = (params, callback) => {
     return crud_helper.create(bands, params, (err, model) => {
-      console.log(model);
       return callback(err, model)
     })
   }

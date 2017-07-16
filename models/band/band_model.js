@@ -1,3 +1,4 @@
+// BAND MODEL
 module.exports = (mongoose, autoIncrement) => {
   const {Schema}  =  mongoose
   const bandSchema = new Schema({

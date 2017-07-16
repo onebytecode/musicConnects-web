@@ -12,6 +12,5 @@ module.exports = () => {
   const db = {
     url: getUrl()
   }
-  console.log(db);
   return db
 }
