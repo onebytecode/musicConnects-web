@@ -7,11 +7,13 @@ module.exports  =  (models, secrets, links) => {
   const artistsController = require('./artists')(Artists, helpers)
   const usersController  =  require('./users')(Users, helpers)
   const registrationsController = require('./registrations')(usersController, helpers, links)
+  const authenticationController = require('./authentications')(usersController, helpers, links)
   const controllers = {
     bands_controller:   bandsController,
     artists_controller: artistsController,
     users_controller: usersController,
-    registration_controller: registrationsController
+    registration_controller: registrationsController,
+    authentication_controller: authenticationController
   }
   return controllers
 }

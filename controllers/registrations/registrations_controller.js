@@ -12,7 +12,7 @@ module.exports = (users_controller, helpers, links) => {
         regToken: token
       }
     }
-    const regLink = links.server_link + '/user/authorize/?token=' + token
+    const regLink = links.server_link + '/user/authorize?token=' + token
     mail_helper.sendMailToUser(mail, 'Tema', regLink, (err, msg) => {
       console.log(err, msg);
     })
