@@ -30,8 +30,8 @@ module.exports = (router, controllers) => {
       if (!body.user) return res.sendStatus(400)
       const { mail } = body.user
       registration_controller.registrateUserByEmail(mail, (err, data) => {
-        console.log(err, data);
-        res.sendStatus(200)
+        if (err) return res.sendStatus(401)
+        return res.send(data)
       })
     })
 
