@@ -3,9 +3,9 @@ const POST           =  'POST'
 const DELETE         =  'DELETE'
 const PUT            =  'PUT'
 
-
-module.exports = (router, controllers) => {
+module.exports = (express, controllers) => {
   const { bands_controller, artists_controller, registration_controller, authentication_controller } = controllers
+  const router = express.Router()
   router.route('/') // GET /
     .get((req, res) => { return require('./main')(req, res) })
 
@@ -47,5 +47,7 @@ module.exports = (router, controllers) => {
         return res.send(data)
       })
     })
+
+    return router
 
 }

@@ -6,6 +6,7 @@ const bodyParser     = require('body-parser')
 const ENV            = process.env.NODE_ENV || 'dev'
 const logger         = require('./logging')
 const morgan         = require('morgan')
+const routers        = require('./routes')
 const configBundle   = {
   secretsPath: __dirname + '/secrets.obc'
 }
@@ -29,12 +30,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
 
-app.use('/', router)
+// app.use('/', router)
+app.use('/api', routers(express, controllers).api_v1)
+app.use('/', routers(express, controllers).commonRouter)
 // DB CONNECTION
 app.db.connect.then(
   success => {
     console.log(`Connection to db status ${success.status}`);
-    require('./routes')(router, app.controllers)
+    // require('./routes')(router, app.controllers)
   }, error => {
     console.log(`Connection to db status ${error.status}`);
   }
