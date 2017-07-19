@@ -1,5 +1,7 @@
 module.exports = (req, res) => {
 
-  res.setHeader("content-encoding", "gzip")
+  if (req.path === '/public/main.js.gz') {
+    res.setHeader("content-encoding", "gzip")
+  }
   res.sendFile(req.app.root + req.path)
 }

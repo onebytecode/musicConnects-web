@@ -1,4 +1,4 @@
-module.exports =  (router, controllers) => {
+module.exports =  (router, controllers, secret) => {
   const commonRouter = require('./router')(router, controllers)
   const api_v1 = require('./api')(router, controllers).v1
 

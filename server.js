@@ -33,8 +33,11 @@ app.use(bodyParser.json({ type: 'application/json'}));
 app.use(cookieParser())
 
 // app.use('/', router)
-app.use('/api', routers(express, controllers).api_v1)
-app.use('/', routers(express, controllers).commonRouter)
+app.use('/', (req, res, next) => {
+  require('./routes/authenticator')(req, res, next, config.secrets.secretToken)
+})
+app.use('/api', routers(express, controllers, config.secrets).api_v1)
+app.use('/', routers(express, controllers, config.secrets).commonRouter)
 // DB CONNECTION
 app.db.connect.then(
   success => {

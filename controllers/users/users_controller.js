@@ -7,10 +7,11 @@ module.exports  =  (users, helpers) => {
       return callback(err, model)
     })
   }
-  const createUser = (params, callback) => {
-    return crud_helper.create(users, params, (err, model) => {
-      return callback(err, model)
-    })
+  const createUser = async (params, callback = () => {}) => {
+    console.log(params);
+    let user = await crud_helper.create(users, params)
+    callback(null, user)
+    return user
   }
   const updateUser  =  (params, callback) => {
     return crud_helper.update(users, params, (err, model) => {

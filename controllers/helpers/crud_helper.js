@@ -5,10 +5,15 @@ module.exports = () => {
       return callback(err, _model)
     })
   }
-  const create = (model, params, callback) => {
-    model(params).save((err, _model) => {
-      return callback(err, _model)
+  const create = (model, params, callback = () => {}) => {
+    return new Promise((resolve, reject) => {
+      model(params).save((err, _model) => {
+        if (err) return reject(err)
+        resolve(_model)
+        return callback(err, _model)
+      })
     })
+
   }
   const update  =  (model, params, callback) => {
     const uParams = {}
