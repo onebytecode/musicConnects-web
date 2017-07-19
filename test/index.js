@@ -15,11 +15,11 @@ describe('Testing config', () => {
   require('./config')(config, expect)
 })
 describe('Testing Routes', () => {
-  // require('./routes')(server, chai, should, expect)
+  require('./routes')(server, chai, should, expect)
 })
 describe('Testing db', () => {
   require('./db')(db, should)
 })
 describe('Testing controllers', () => {
-  // require('./controllers')(controllers, should, expect)
+  require('./controllers')(controllers, should, expect)
 })

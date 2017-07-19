@@ -30,5 +30,9 @@ module.exports = (router, controllers) => {
       })
     })
 
+    router.route('/connectivity_test')
+      .get((req, res) => {
+        res.sendStatus(200)
+      })
     return router
 }
