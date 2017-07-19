@@ -7,6 +7,7 @@ const ENV            = process.env.NODE_ENV || 'dev'
 const logger         = require('./logging')
 const morgan         = require('morgan')
 const routers        = require('./routes')
+const cookieParser   = require('cookie-parser')
 const configBundle   = {
   secretsPath: __dirname + '/secrets.obc'
 }
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
+app.use(cookieParser())
 
 // app.use('/', router)
 app.use('/api', routers(express, controllers).api_v1)
