@@ -11,7 +11,9 @@ module.exports = () => {
     })
   }
   const update  =  (model, params, callback) => {
-    model.findOneAndUpdate({ _id: params._id }, params, { new: true }, (err, doc) => {
+    const uParams = {}
+    Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
+    model.findOneAndUpdate({ _id: params._id }, uParams, { new: true }, (err, doc) => {
       return callback(err, doc)
     })
   }

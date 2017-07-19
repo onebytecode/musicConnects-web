@@ -2,10 +2,27 @@ const GET            =  'GET'
 const POST           =  'POST'
 const DELETE         =  'DELETE'
 const PUT            =  'PUT'
+const { buildSchema } = require('graphql')
+const gqlHTTP  =  require('express-graphql')
 
 module.exports = (express, controllers) => {
   const { bands_controller, artists_controller, registration_controller, authentication_controller } = controllers
   const router = express.Router()
+  const schema = buildSchema(`
+    type Query {
+      hello: String
+    }
+  `)
+  const root = {
+    hello: () => {
+      return 'World'
+    }
+  }
+  router.use('/gql', gqlHTTP({
+    rootValue: root,
+    schema: schema,
+    graphiql: true
+  }))
   router.route('/') // GET /
     .get((req, res) => { return require('./main')(req, res) })
 
