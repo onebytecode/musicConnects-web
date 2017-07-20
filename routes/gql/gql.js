@@ -4,10 +4,11 @@ const gqlHTTP  =  require('express-graphql')
 
 module.exports = (express, controllers) => {
   const { users_controller } = controllers
-  const router = express.Router
+  const router = express.Router()
   const schema = buildSchema(`
     type User {
       name: String
+      mails: [String]
     }
     type Mutation {
       createUser(name: String!): User
@@ -27,6 +28,12 @@ module.exports = (express, controllers) => {
       return user
     }
   }
+
+  router.use('/', gqlHTTP({
+    rootValue: root,
+    schema: schema,
+    graphiql: true
+  }))
 
   return router
 }

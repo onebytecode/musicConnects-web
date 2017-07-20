@@ -30,9 +30,15 @@ module.exports = (mongoose, autoIncrement) => {
     field: '_id',
     startAt: 1
   })
-  userSchema.virtual('fullName')
+  userSchema.virtual('name')
     .get(function() {
       return this.naming.fName + ' ' + this.naming.sName
+    })
+    .set(function(v) {
+      const naming = v.split(/\s/)
+      if (!naming) return
+      this.naming.fName = naming[0]
+      this.naming.sName = naming[1] ? naming[1] : ''
     })
   const User  =  mongoose.model('User', userSchema)
 
