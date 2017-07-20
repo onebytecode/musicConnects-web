@@ -1,9 +1,14 @@
 module.exports = () => {
-  const get  =  (model, params, callback) => {
-    console.log(params);
-    model.findOne(params, (err, _model) => {
-      return callback(err, _model)
+  const get  =  (model, params, callback = () => {}) => {
+    return new Promise((resolve, reject) => {
+      model.findOne(params, (err, _model) => {
+        callback(err, _model)
+        if (err) return reject(err)
+        resolve(_model)
+        return
+      })
     })
+
   }
   const create = (model, params, callback = () => {}) => {
     return new Promise((resolve, reject) => {
