@@ -4,7 +4,7 @@ module.exports = (mongoose, autoIncrement) => {
   const bandSchema = new Schema({
     _id: { type: Number, required: true },
     name: String,
-    artists: [{ type: Schema.Types.ObjectId, ref: 'artist' }],
+    artists: Array,
     biography: String,
     years: String,
     albums: Array,

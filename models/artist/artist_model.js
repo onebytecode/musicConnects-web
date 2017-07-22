@@ -11,7 +11,7 @@ module.exports = (mongoose, autoIncrement) => {
     birth: String,
     additional_info: String,
     _creator: { type: Number, ref: 'band' },
-    bands: [{ type: Schema.Types.ObjectId, ref: 'band' }]
+    bands: Array
   })
 
   artistSchema.plugin(autoIncrement.plugin, {
