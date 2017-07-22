@@ -1,5 +1,5 @@
 module.exports =  (router, controllers, secret) => {
-  const commonRouter = require('./router')(router, controllers)
+  const commonRouter = require('./router')(router, controllers, secret)
   const api_v1 = require('./api')(router, controllers).v1
 
   const routers = {

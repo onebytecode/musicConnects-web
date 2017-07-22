@@ -2,9 +2,7 @@
 
 module.exports = (router, controllers) => {
   const { registration_controller, authentication_controller } = controllers
-  const gqlModule = require('./gql')(controllers)
 
-  router.use('/gql', gqlModule)
   router.route('/user_registrate')
     .post((req, res) => {
       const { body } = req

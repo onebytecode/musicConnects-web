@@ -3,10 +3,17 @@ const POST           =  'POST'
 const DELETE         =  'DELETE'
 const PUT            =  'PUT'
 const gqlModule = require('./gql')
+const apiAuthenticator = require('./authenticator')
 
-module.exports = (express, controllers) => {
+module.exports = (express, controllers, secrets) => {
   const { bands_controller, artists_controller, registration_controller, authentication_controller } = controllers
   const router = express.Router()
+
+  // /api/gql
+  router.use('/api', (req, res, next) => {
+    apiAuthenticator(req, res, next, secrets.secretToken)
+  })
+  router.use('/api/gql', gqlModule(express, controllers))
 
   router.route('/') // GET /
     .get((req, res) => { return require('./main')(req, res) })
