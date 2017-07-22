@@ -7,7 +7,7 @@ const readFileAsArray = (path) => {
     const mapData = arrayToMap(arrayData)
     return mapData
   } catch (ex) {
-    data = process.env
+    const data = process.env
     return data
   }
 
