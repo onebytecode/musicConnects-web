@@ -15,7 +15,8 @@ const config         = require('./config')(configBundle)
 const db             = require('./db')(config.db)
 const models         = require('./models')(db)
 const controllers    = require('./controllers')(models, config.secrets, config.links)
-
+const mcMiddleware   = require('./mc_middleware')()
+/* GLOBALS */
 app.root        =  __dirname
 app.logger      =  logger
 app.models      =  models
@@ -30,24 +31,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
-app.use(cookieParser())
 
-// app.use('/', router)
+/*
+  CUSTOM MIDDLEWARE
+*/
+app.set('trust proxy', 1)
+app.use(mcMiddleware.sessionMiddleware())
+app.use('/sess', (req, res, next) => mcMiddleware.sess(req, res, next))
 app.use('/api', (req, res, next) => {
   require('./routes/authenticator')(req, res, next, config.secrets.secretToken)
 })
 app.use('/api', routers(express, controllers, config.secrets).api_v1)
 app.use('/', routers(express, controllers, config.secrets).commonRouter)
-// DB CONNECTION
+/* DB CONNECTION */
 app.db.connect.then(
   success => {
     console.log(`Connection to db status ${success.status}`);
-    // require('./routes')(router, app.controllers)
   }, error => {
     console.log(`Connection to db status ${error.status}`);
   }
 )
 
+/* CREATING SERVER */
 app.listen(port, () => {
   logger(`Server running on :: ${port}`, '', 'GOOD')
   logger(`Node enviroment is ${ENV}`, '', 'GOOD')

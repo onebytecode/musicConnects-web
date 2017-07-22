@@ -19,7 +19,11 @@ module.exports = (mongoose, autoIncrement) => {
       otherMails: Array
     },
     gender: String,
-    age: Date,
+    aging: {
+      day: String,
+      month: String,
+      year: String
+    },
     tokens: {
       regToken: String
     }
@@ -30,7 +34,10 @@ module.exports = (mongoose, autoIncrement) => {
     field: '_id',
     startAt: 1
   })
-  userSchema.virtual('name')
+  /*
+    VIRTUALS
+  */
+  userSchema.virtual('name') // NAME
     .get(function() {
       return this.naming.fName + ' ' + this.naming.sName
     })
@@ -40,6 +47,25 @@ module.exports = (mongoose, autoIncrement) => {
       this.naming.fName = naming[0]
       this.naming.sName = naming[1] ? naming[1] : ''
     })
+  userSchema.virtual('age') // AGE 
+    .get(function() {
+      const { day, month, year } = this.aging
+      const dNow = new Date().getTime()
+      const dPast = new Date(year + ' ' + month + ' ' + day)
+      const years = new Date(dNow - dPast).getYear() - 70
+      return years
+    })
+    .set(function(date) {
+      const d = new Date(date)
+      if (!d) throw new Error('Error date format ' + date)
+      const day = d.getDay()
+      const month = d.getMonth() + 1
+      const year = d.getFullYear()
+      this.aging.year = year
+      this.aging.month = month
+      this.aging.day = day
+    })
+  /* **** */
   const User  =  mongoose.model('User', userSchema)
 
   return User

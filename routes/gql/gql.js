@@ -8,11 +8,11 @@ module.exports = (express, controllers) => {
   const schema = buildSchema(`
     input UserInfo {
       name: String!
-      mails: [String]
+      age: String
     }
     type User {
       name: String
-      mails: [String]
+      age: String
     }
     type Mutation {
       createUser(input: UserInfo): User
@@ -27,8 +27,9 @@ module.exports = (express, controllers) => {
       const user = await users_controller.get({ _id: _id })
       return user
     },
-    createUser: async ({ name, mails }) => {
-      const user = await users_controller.create({ name: name, mails: mails })
+    createUser: async ({ input }) => {
+      const { name, age } = input
+      const user = await users_controller.create({ name: name, age: age })
       console.log(user);
       return user
     }
