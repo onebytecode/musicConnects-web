@@ -9,7 +9,7 @@
     "webrack": "NODE_ENV=production webpack -p",
     "webrack:dev": "NODE_ENV=dev webpack --colors --progress --watch",
     "start": "NODE_ENV=production node server",
-    "start:dev": "NODE_ENV=dev nodemon",
+    "start:dev": "NODE_ENV=dev secretToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 nodemon",
     "migrate": "node config/migrations/migrate"
   },
   "repository": {

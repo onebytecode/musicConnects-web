@@ -1,9 +1,16 @@
 // SECRETS READER
 const fs  =  require('fs')
 const readFileAsArray = (path) => {
-  const data = fs.readFileSync(path, 'UTF-8')
-  const arrayData = data.split(/\n/)
-  return arrayData
+  try {
+    const data = fs.readFileSync(path, 'UTF-8')
+    const arrayData = data.split(/\n/)
+    const mapData = arrayToMap(arrayData)
+    return mapData
+  } catch (ex) {
+    data = process.env
+    return data
+  }
+
 }
 const arrayToMap = (array) => {
   const mapArray = {}
@@ -15,7 +22,6 @@ const arrayToMap = (array) => {
   return mapArray
 }
 module.exports = (path) => {
-  const arraySecrets = readFileAsArray(path)
-  const mapSecrets = arrayToMap(arraySecrets)
+  const mapSecrets = readFileAsArray(path)
   return mapSecrets
 }
