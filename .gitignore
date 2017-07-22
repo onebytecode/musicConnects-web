@@ -35,3 +35,6 @@ build/Release
 
 #
 /scripts/docker_hook.js
+
+#
+*.obc
