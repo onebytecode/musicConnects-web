@@ -34,4 +34,4 @@ build/Release
 .node_repl_history
 
 # Obc
-.obc
+*.obc
