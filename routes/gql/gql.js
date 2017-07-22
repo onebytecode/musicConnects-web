@@ -6,12 +6,16 @@ module.exports = (express, controllers) => {
   const { users_controller } = controllers
   const router = express.Router()
   const schema = buildSchema(`
+    input UserInfo {
+      name: String!
+      mails: [String]
+    }
     type User {
       name: String
       mails: [String]
     }
     type Mutation {
-      createUser(name: String!): User
+      createUser(input: UserInfo): User
     }
     type Query {
       getUser(_id: Int!): User
