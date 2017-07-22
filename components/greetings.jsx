@@ -5,7 +5,7 @@ class Greetings extends Component {
     return(
       <div className="greetings">
           <p>
-            Welcome to MusicHub!
+            Welcome to MusicHub, dirty Negga!
           </p>
       </div>
     )

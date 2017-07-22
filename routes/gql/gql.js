@@ -27,8 +27,9 @@ module.exports = (express, controllers) => {
       const user = await users_controller.get({ _id: _id })
       return user
     },
-    createUser: async ({ name }) => {
-      const user = await users_controller.create({ name: name })
+    createUser: async ({ name, mails }) => {
+      const user = await users_controller.create({ name: name, mails: mails })
+      console.log(user);
       return user
     }
   }
