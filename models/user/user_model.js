@@ -24,6 +24,7 @@ module.exports = (mongoose, autoIncrement) => {
       month: String,
       year: String
     },
+    bands: [{ type: Schema.Types.ObjectId, ref: 'Band' }],
     tokens: {
       regToken: String
     }
@@ -47,7 +48,7 @@ module.exports = (mongoose, autoIncrement) => {
       this.naming.fName = naming[0]
       this.naming.sName = naming[1] ? naming[1] : ''
     })
-  userSchema.virtual('age') // AGE 
+  userSchema.virtual('age') // AGE
     .get(function() {
       const { day, month, year } = this.aging
       const dNow = new Date().getTime()

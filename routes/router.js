@@ -14,6 +14,7 @@ module.exports = (express, controllers, secrets) => {
     apiAuthenticator(req, res, next, secrets.secretToken)
   })
   router.use('/api/gql', gqlModule(express, controllers))
+  router.use('/api', (req, res, next) => require('./api')(express, controllers).v1)
 
   router.route('/') // GET /
     .get((req, res) => { return require('./main')(req, res) })

@@ -1,12 +1,23 @@
 module.exports = () => {
   const get  =  (model, params, callback = () => {}) => {
+    const { mParams, mPopulate } = params
     return new Promise((resolve, reject) => {
-      model.findOne(params, (err, _model) => {
-        callback(err, _model)
-        if (err) return reject(err)
-        resolve(_model)
-        return
-      })
+      if (mPopulate) {
+        model.findOne(mParams).populate(mPopulate).exec((err, _model) => {
+          callback(err, _model)
+          if (err) return reject(err)
+          resolve(_model)
+          return
+        })
+      } else {
+        model.findOne(mParams, (err, _model) => {
+          callback(err, _model)
+          if (err) return reject(err)
+          resolve(_model)
+          return
+        })
+      }
+
     })
 
   }
