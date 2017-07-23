@@ -9,12 +9,12 @@ module.exports  =  (bands, helpers) => {
   }
   const createBand = async (params, callback = () => {}) => {
     try {
-      let band = await crud_helper.create(bands, params)
+      let band  = await crud_helper.create(bands, params)
       callback(null, band)
       return band
     } catch(err) {
-      console.log(`Err`);
-      return callback(err, null)
+      callback(err)
+      return err
     }
   }
   const updateBand  =  (params, callback) => {

@@ -24,9 +24,13 @@ module.exports = () => {
   const create = (model, params, callback = () => {}) => {
     return new Promise((resolve, reject) => {
       model(params).save((err, _model) => {
-        if (err) return reject(err)
-        resolve(_model)
-        return callback(err, _model)
+        if (err) {
+          callback(err)
+          return reject(err)
+        } else {
+          callback(null, _model)
+          return resolve(_model)
+        }
       })
     })
 

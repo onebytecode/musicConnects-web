@@ -1,15 +1,17 @@
 module.exports  =  (bands_controller, should, expect) => {
   describe('Bands controller tests', () => {
-    it('it should create band', done => {
+    it('it should create band',  done => {
       bands_controller.create({
-        _id: 1,
-        name: 'Guns and Roses'
+        _id: 500,
+        name: 'Guns and Roses',
+        subscribers: [1,2,3]
       }, (err, band) => {
-        if (err) throw new Error(err)
-        expect(err).to.be.equal(null)
-        band.should.be.a('object')
-        band.name.should.be.equal('Guns and Roses')
-        done()
+        if (err) {
+          done(new Error(err))
+        } else {
+          expect(band._id).to.be.equal(1)
+          done()
+        }
       })
     })
     it('it should get band', done => {
