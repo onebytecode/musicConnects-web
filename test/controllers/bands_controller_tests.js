@@ -2,7 +2,7 @@ module.exports  =  (bands_controller, should, expect) => {
   describe('Bands controller tests', () => {
     it('it should create band',  done => {
       bands_controller.create({
-        _id: 500,
+        _id: 1,
         name: 'Guns and Roses',
         subscribers: [1,2,3]
       }, (err, band) => {

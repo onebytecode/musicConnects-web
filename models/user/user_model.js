@@ -24,7 +24,7 @@ module.exports = (mongoose, autoIncrement) => {
       month: String,
       year: String
     },
-    bands: [{ type: Schema.Types.ObjectId, ref: 'Band' }],
+    bands: [{ type: Number, ref: 'Band' }],
     tokens: {
       regToken: String
     }

@@ -15,10 +15,14 @@ module.exports  =  (users, helpers) => {
     }
   }
   const createUser = async (params, callback = () => {}) => {
-    console.log(params);
-    let user = await crud_helper.create(users, params)
-    callback(null, user)
-    return user
+    try {
+      let user = await crud_helper.create(users, params)
+      callback(null, user)
+      return user
+    } catch (err) {
+      callback(err)
+      return err
+    }
   }
   const updateUser  =  (params, callback) => {
     return crud_helper.update(users, params, (err, model) => {
