@@ -8,13 +8,14 @@ const apiAuthenticator = require('./authenticator')
 module.exports = (express, controllers, secrets) => {
   const { bands_controller, artists_controller, registration_controller, authentication_controller } = controllers
   const router = express.Router()
+  const apiModule = require('./api')(express, controllers)
 
   // /api/gql
   router.use('/api', (req, res, next) => {
     apiAuthenticator(req, res, next, secrets.secretToken)
   })
   router.use('/api/gql', gqlModule(express, controllers))
-  router.use('/api', (req, res, next) => require('./api')(express, controllers).v1)
+  router.use('/api', apiModule.v1)
 
   router.route('/') // GET /
     .get((req, res) => { return require('./main')(req, res) })

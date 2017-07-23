@@ -5,6 +5,7 @@ module.exports  =  (bands_controller, should, expect) => {
         _id: 1,
         name: 'Guns and Roses'
       }, (err, band) => {
+        if (err) throw new Error(err)
         expect(err).to.be.equal(null)
         band.should.be.a('object')
         band.name.should.be.equal('Guns and Roses')
