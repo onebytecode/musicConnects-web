@@ -36,6 +36,7 @@ module.exports = (gql, controllers) => {
 
   const createFunc = async (data) => {
     const { name, bands, age } = data
+    console.log(data);
     const user = await users_controller.create({ name: name, bands: bands, age: age })
     return user
   }
