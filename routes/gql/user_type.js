@@ -45,8 +45,6 @@ module.exports = (gql, controllers) => {
     args: { id : { type: gql.GraphQLInt } },
     resolve: async function(_, {id}) {
       const user = await getFunc(id)
-      console.log(user);
-
       return user
     }
   }
