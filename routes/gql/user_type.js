@@ -2,24 +2,8 @@
 
 module.exports = (gql, controllers) => {
   const { users_controller } = controllers
-  const bandType  =  new gql.GraphQLObjectType({
-    name: 'BandObject',
-    fields: {
-      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-      name: { type: gql.GraphQLString },
-      subscribers: { type: new gql.GraphQLList(gql.GraphQLInt) }
-    }
-  })
-  const userType  =  new gql.GraphQLObjectType({
-    name: 'User',
-    fields: {
-      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-      name: { type: gql.GraphQLString },
-      age: { type: gql.GraphQLString },
-      bands: { type: new gql.GraphQLList(bandType) },
-      test: { type: gql.GraphQLString }
-    }
-  })
+  const bandType  =  require('./band_type')(gql, controllers)
+  
 
   const getFunc = async (id) => {
     const user = await users_controller.get({ mParams: {_id: id}, mPopulate: 'bands' })
@@ -61,7 +45,8 @@ module.exports = (gql, controllers) => {
 
   const model = {
     getUser: getUser,
-    createUser: createUser
+    createUser: createUser,
+    userType: userType
   }
 
   return model

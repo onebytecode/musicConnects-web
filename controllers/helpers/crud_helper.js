@@ -35,17 +35,27 @@ module.exports = () => {
     })
 
   }
-  const update  =  (model, params, callback) => {
-    const uParams = {}
-    Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
-    model.findOneAndUpdate({ _id: params._id }, uParams, { new: true }, (err, doc) => {
-      return callback(err, doc)
+  const update  =  (model, params, callback = () => {}) => {
+    return new Promise((resolve, reject) => {
+      const uParams = {}
+      Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
+      model.findOneAndUpdate({ _id: params._id }, uParams, { new: true }, (err, doc) => {
+        if (err) reject(err)
+        callback(err, doc)
+        return resolve(doc)
+      })
     })
+
   }
-  const _delete  =  (model, params, callback) => {
-    model.findOneAndRemove({ _id: params._id }, (err, doc) => {
-      return callback(err, doc)
+  const _delete  =  (model, params, callback = () => {}) => {
+    return new Promise((resolve, reject) => {
+      model.findOneAndRemove({ _id: params._id }, (err, doc) => {
+        if (err) reject(err)
+        callback(err, doc)
+        resolve(doc)
+      })
     })
+
   }
   const methods = {
     get: get,

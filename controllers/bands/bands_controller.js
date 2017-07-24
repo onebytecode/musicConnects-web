@@ -17,7 +17,7 @@ module.exports  =  (bands, helpers) => {
       return err
     }
   }
-  const updateBand  =  (params, callback) => {
+  const updateBand  =  (params, callback = () => {}) => {
     return crud_helper.update(bands, params, (err, model) => {
       return callback(err, model)
     })
