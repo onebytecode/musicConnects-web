@@ -22,4 +22,10 @@ describe('Testing db', () => {
 })
 describe('Testing controllers', () => {
   require('./controllers')(controllers, should, expect)
+  after( async () => {
+    await db.mongoose.connections[0].collections['bands'].drop()
+    await db.mongoose.connections[0].collections['users'].drop()
+    await db.mongoose.connections[0].collections['artists'].drop()
+
+  })
 })

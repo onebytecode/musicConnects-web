@@ -5,7 +5,7 @@ module.exports = (mongoose, autoIncrement) => {
     name: {
       firstName: String,
       secondName: String,
-      sureName: String
+      surname: String
     },
     biography: String,
     birth: String,

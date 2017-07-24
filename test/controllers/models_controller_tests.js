@@ -82,5 +82,50 @@ module.exports  =  (models_controller, should, expect) => {
         })
       })
     })
+    describe('Testing User with Bands populate', () => {
+      it ('it should create user with band population', async () => {
+        const uCreation = await models_controller.create({ name: 'Users' }, {
+          _id: 1,
+          name: "Music Fun",
+          bands: [1]
+        })
+        if (uCreation.error) throw new Error(uCreation.error)
+        const user = model
+        const bCreation = await models_controller.create({ name: 'Bands' }, {
+          _id: 1,
+          name: "Guns And Roses",
+          subscribers: [1]
+        })
+        if (bCreation.error) throw new Error(bCreation.error)
+        const { model, error } = await models_controller.get({ name: 'Users' }, { mParams: {
+          _id:1
+        }, mPopulate: 'bands' })
+        if (error) throw new Error(error)
+        expect(model.name).to.be.equal("Music Fun")
+        expect(model.bands).to.be.a('array')
+        expect(model.bands[0].name).to.be.equal('Guns And Roses')
+      })
+    })
+    describe('Testing Artist belong to Band populate', () => {
+      it('it should create artist which is belong to band', async () => {
+        const aCreation = await models_controller.create({ name: 'Artists' }, {
+          _id: 1,
+          name: {
+            surname: 'Slash'
+          },
+          bands: {
+            belong: 1
+          }
+        })
+        if (aCreation.error) throw new Error(aCreation.error)
+        const { error, model } = await models_controller.get({name: 'Artists'}, { mParams: {
+          _id: 1
+        }, mPopulate: { path: "bands.belong", model: 'Band' } })
+        if (error) throw new Error(error)
+        expect(model.name.surname).to.be.equal('Slash')
+        expect(model.bands.belong).to.be.a('object')
+        expect(model.bands.belong.name).to.be.equal('Guns And Roses')
+      })
+    })
   })
 }

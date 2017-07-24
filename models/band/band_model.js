@@ -11,7 +11,8 @@ module.exports = (mongoose, autoIncrement) => {
     tours: Array,
     ratings: Array,
     additional_info: Array,
-    subscribers: [{ type: Number, ref: 'User'}]
+    subscribers: [{ type: Number, ref: 'User'}],
+    artists: [{ type: Number, ref: 'Artist' }]
   })
 
   bandSchema.plugin(autoIncrement.plugin, {
