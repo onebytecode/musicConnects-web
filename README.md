@@ -7,6 +7,8 @@
 
 | method | params | result |
 | ------ | ------ | ------ |
-| getUser | id:String  | name |
-| createUser | name:String age:String bands:[Int] | id name age bands<Object Array>  |
-| getBand | name:String subscribers:[Int] | id name subscribers<Object Array> |
+| getUser | id:Int  | name age bands artists |
+| createUser | name:String age:String bands:[Int] artists[Int] | id name age bands  |
+| getBand | id:Int | id name subscribers |
+| createBand | name:String subscribers:[Int] | name subscribers |
+| getArtist | naming: { firstName, secondName, surname } bands: { belong:Int } | naming bands |
