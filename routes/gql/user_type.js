@@ -1,28 +1,42 @@
 // GQL USER TYPE
 
-module.exports = (gql, controllers) => {
-  const { users_controller } = controllers
-  const bandType  =  require('./band_type')(gql, controllers)
-  
+module.exports = (gql, controllers, types) => {
+  const { models_controller } = controllers
+  const { userType } = types
+
 
   const getFunc = async (id) => {
-    const user = await users_controller.get({ mParams: {_id: id}, mPopulate: 'bands' })
-    return user
+    const { error, model } = await models_controller.get({
+      name: 'Users'
+    }, {
+      mParams: { _id: id},
+      mPopulate: 'bands artists'
+    })
+    if (error) throw new Error(error)
+    return model
   }
   const cUserInput = new gql.GraphQLInputObjectType({
     name: 'UserInput',
     fields: {
       name: { type: new gql.GraphQLNonNull(gql.GraphQLString) },
       age:  { type: gql.GraphQLString },
-      bands: { type: new gql.GraphQLList(gql.GraphQLInt) }
+      bands: { type: new gql.GraphQLList(gql.GraphQLInt) },
+      artists: { type: new gql.GraphQLList(gql.GraphQLInt) }
     }
   })
 
   const createFunc = async (data) => {
-    const { name, bands, age } = data
-    console.log(data);
-    const user = await users_controller.create({ name: name, bands: bands, age: age })
-    return user
+    const { name, age, bands, artists } = data
+    const { error, model } = await models_controller.create({
+      name: 'Users'
+    }, {
+      name: name,
+      age: age,
+      bands: bands,
+      artists: artists
+    })
+    if (error) throw new Error(error)
+    return model
   }
   const getUser = {
     type: userType,
@@ -45,8 +59,7 @@ module.exports = (gql, controllers) => {
 
   const model = {
     getUser: getUser,
-    createUser: createUser,
-    userType: userType
+    createUser: createUser
   }
 
   return model

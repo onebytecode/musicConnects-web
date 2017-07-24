@@ -18,13 +18,13 @@ module.exports = (express, controllers, secrets) => {
     console.log(req.body);
     next()
   })
-  // router.use('/api/gql', gqlModule(express, controllers))
+  router.use('/api/gql', gqlModule(express, controllers))
   router.use('/api', apiModule.v1)
 
   router.route('/') // GET /
     .get((req, res) => { return require('./main')(req, res) })
 
-  // router.use('/gql', gqlModule(express, controllers))
+  router.use('/gql', gqlModule(express, controllers))
 
   router.route('/public/*') // GET /public/*
     .get((req, res) => { return require('./resources')(req, res) })

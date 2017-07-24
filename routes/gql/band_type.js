@@ -1,13 +1,14 @@
 // GQL BAND TYPE
 
-module.exports = (gql, controllers) => {
-  const { bands_controller } = controllers
-  // const { userType } = require('./user_type')(gql, controllers)
-
+module.exports = (gql, controllers, types) => {
+  const { models_controller } = controllers
+  const { bandType } = types
 
   const getFunc = async (id) => {
-    const band = await bands_controller.get({ mParams: {_id: id}, mPopulate: 'subscribers' })
-    return band
+    const {error, model} = await models_controller.get({ name: 'Bands' },
+    { mParams: {_id: id}, mPopulate: 'subscribers' })
+    if (error) throw new Error(error)
+    return model
   }
   const cBandInput = new gql.GraphQLInputObjectType({
     name: 'BandInput',
@@ -19,16 +20,20 @@ module.exports = (gql, controllers) => {
 
   const createFunc = async (data) => {
     const { name, subscribers } = data
-    const band = await bands_controller.create({ name: name, subscribers: subscribers })
-    return band
+    const { error, model } = await models_controller.create({
+      name: 'Bands'
+    }, {
+      name: name,
+      subscribers: subscribers
+    })
+    if (error) throw new Error(error)
+    return model
   }
   const getBand = {
     type: bandType,
     args: { id : { type: gql.GraphQLInt } },
     resolve: async function(_, {id}) {
       const band = await getFunc(id)
-      console.log(band);
-
       return band
     }
   }
@@ -45,8 +50,7 @@ module.exports = (gql, controllers) => {
 
   const model = {
     getBand: getBand,
-    createBand: createBand,
-    bandType: bandType
+    createBand: createBand
   }
 
   return model
