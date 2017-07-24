@@ -2,7 +2,7 @@ module.exports = (mongoose, autoIncrement) => {
   const { Schema } = mongoose
   const artistSchema = new Schema({
     _id: { type: Number, required: true },
-    name: {
+    naming: {
       firstName: String,
       secondName: String,
       surname: String
@@ -22,7 +22,10 @@ module.exports = (mongoose, autoIncrement) => {
   })
   artistSchema.virtual('fullName')
     .get(function() {
-      return this.name.firstName + ' ' + this.name.secondName
+      const fName = this.naming.firstName || ''
+      const sName = this.naming.secondName || ''
+      const surname = '"' + this.naming.surname + '"' || ''
+      return fName + ' ' + surname + ' ' + secondName
     })
   const Artist  =  mongoose.model('Artist', artistSchema)
 
