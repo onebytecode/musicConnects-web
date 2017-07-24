@@ -10,8 +10,9 @@ module.exports = (mongoose, autoIncrement) => {
     biography: String,
     birth: String,
     additional_info: String,
-    _creator: { type: Number, ref: 'band' },
-    bands: Array
+    bands: {
+      belong: { type: Number, ref: 'Band' }
+    }
   })
 
   artistSchema.plugin(autoIncrement.plugin, {

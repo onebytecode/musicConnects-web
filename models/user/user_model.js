@@ -25,6 +25,7 @@ module.exports = (mongoose, autoIncrement) => {
       year: String
     },
     bands: [{ type: Number, ref: 'Band' }],
+    artists: [{ type: Number, ref: 'Artist' }],
     tokens: {
       regToken: String
     }
