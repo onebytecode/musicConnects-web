@@ -110,7 +110,9 @@ module.exports  =  (models_controller, should, expect) => {
       it('it should create artist which is belong to band', async () => {
         const aCreation = await models_controller.create({ name: 'Artists' }, {
           _id: 1,
-          name: {
+          naming: {
+            firstName: "Saul",
+            secondName: "Hudson",
             surname: 'Slash'
           },
           bands: {
@@ -122,7 +124,7 @@ module.exports  =  (models_controller, should, expect) => {
           _id: 1
         }, mPopulate: { path: "bands.belong", model: 'Band' } })
         if (error) throw new Error(error)
-        expect(model.name.surname).to.be.equal('Slash')
+        expect(model.fullName).to.be.equal('Saul "Slash" Hudson')
         expect(model.bands.belong).to.be.a('object')
         expect(model.bands.belong.name).to.be.equal('Guns And Roses')
       })

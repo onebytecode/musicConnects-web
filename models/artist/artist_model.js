@@ -25,7 +25,7 @@ module.exports = (mongoose, autoIncrement) => {
       const fName = this.naming.firstName || ''
       const sName = this.naming.secondName || ''
       const surname = '"' + this.naming.surname + '"' || ''
-      return fName + ' ' + surname + ' ' + secondName
+      return fName + ' ' + surname + ' ' + sName
     })
   const Artist  =  mongoose.model('Artist', artistSchema)
 
