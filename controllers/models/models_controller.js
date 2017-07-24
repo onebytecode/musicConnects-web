@@ -5,7 +5,7 @@ module.exports = (models, helpers) => {
   const modelNames = Object.keys(models)
   const defineModel = (name) => {
     const index = modelNames.indexOf(name)
-    if (!index) return { error: new Error('No model with name ' + name), result: null }
+    if (index === -1) return { error: new Error('No model with name ' + name), result: null }
     const model = models[name]
     return { error: null, result: model }
   }
@@ -13,7 +13,10 @@ module.exports = (models, helpers) => {
     const { name } = setup
     const defModel = defineModel(name)
     const { error, result } = defModel
-    if (error) return { error: error, model: null }
+    if (error) {
+      callback(error)
+      return { error: error, model: null }
+    }
     const _model = result
     let model, err
     try {
@@ -30,7 +33,10 @@ module.exports = (models, helpers) => {
     const { name } = setup
     const defModel = defineModel(name)
     const { error, result } = defModel
-    if (error) return { error: error, model: null }
+    if (error) {
+      callback(error)
+      return { error: error, model: null }
+    }
     const _model = result
     try {
       let model = await crud_helper.create(_model, params)
@@ -45,7 +51,10 @@ module.exports = (models, helpers) => {
     const { name } = setup
     const defModel = defineModel(name)
     const { error, result } = defModel
-    if (error) return { error: error, model: null }
+    if (error) {
+      callback(error)
+      return { error: error, model: null }
+    }
     const _model = result
     try {
       let model = await crud_helper.update(_model, params)
@@ -60,7 +69,10 @@ module.exports = (models, helpers) => {
     const { name } = setup
     const defModel = defineModel(name)
     const { error, result } = defModel
-    if (error) return { error: error, model: null }
+    if (error) {
+      callback(error)
+      return { error: error, model: null }
+    }
     const _model = result
     try {
       const model = await crud_helper.delete(_model, params)
