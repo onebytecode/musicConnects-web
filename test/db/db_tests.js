@@ -7,8 +7,7 @@ module.exports = (db, should) => {
           done()
         },
         err => {
-          err.should.be.a('object')
-          done()
+          done(err)
         }
       )
     })

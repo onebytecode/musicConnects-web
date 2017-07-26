@@ -1,6 +1,9 @@
 module.exports = (db) => {
   const { mongoose, autoIncrement }  =  db
 
+  const getBiographies = () => {
+    return require('./biography')(mongoose, autoIncrement)
+  }
   const getBands = () => {
     return require('./band')(mongoose, autoIncrement)
   }
@@ -11,9 +14,10 @@ module.exports = (db) => {
     return require('./user')(mongoose, autoIncrement)
   }
   const models = {
-    Bands: getBands(),
+    biographies: getBiographies(),
     Artists: getArtists(),
-    Users: getUsers()
+    Users: getUsers(),
+    Bands: getBands()
   }
   return models
 }
