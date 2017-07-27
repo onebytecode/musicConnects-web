@@ -32,11 +32,8 @@ module.exports  =  (models_controller, should, expect) => {
       })
       it('it should update User', done => {
         models_controller.update({ name: 'Users'}, {
-          _id: 1,
-          naming: {
-            fName: 'Petr',
-            sName: 'Perviy'
-          }
+          id: 1,
+          name: 'Petr Perviy'
         }, (err, model) => {
           if (err) return done(new Error(err))
           expect(err).to.be.equal(null)
@@ -124,7 +121,7 @@ module.exports  =  (models_controller, should, expect) => {
           _id: 1
         }, mPopulate: { path: "bands.belong", model: 'Band' } })
         if (error) throw new Error(error)
-        expect(model.fullName).to.be.equal('Saul "Slash" Hudson')
+        expect(model.fullName).to.be.equal('Saul Slash Hudson')
         expect(model.bands.belong).to.be.a('object')
         expect(model.bands.belong.name).to.be.equal('Guns And Roses')
       })

@@ -6,7 +6,7 @@ const gqlModule = require('./gql')
 const apiAuthenticator = require('./authenticator')
 
 module.exports = (express, controllers, secrets) => {
-  const { bands_controller, artists_controller, registration_controller, authentication_controller } = controllers
+  const { models_controller, bands_controller, artists_controller, registration_controller, authentication_controller } = controllers
   const router = express.Router()
   const apiModule = require('./api')(express, controllers)
 
@@ -38,7 +38,7 @@ module.exports = (express, controllers, secrets) => {
     .post((req, res) => {
       const { body, method } = req
       const { band } = body
-      return require('./bands')(bands_controller, band, res, method)
+      return require('./bands')(models_controller, band, res, method)
     })
 
   router.route('/user/registrate')

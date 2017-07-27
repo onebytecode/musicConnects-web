@@ -1,6 +1,6 @@
 // AUTHENTICATION CONTROLLER
 
-module.exports = (users_controller, helpers, links) => {
+module.exports = (models_controller, helpers, links) => {
 
   const authenticateUserByToken = (token, cb) => {
     const query = {
@@ -8,7 +8,7 @@ module.exports = (users_controller, helpers, links) => {
         regToken: token
       }
     }
-    users_controller.get(query, (err, user) => {
+    models_controller.get({ name: 'Users' }, query, (err, user) => {
       cb(err, user)
     })
   }

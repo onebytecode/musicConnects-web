@@ -22,7 +22,9 @@ module.exports = (express, controllers) => {
     name: 'Mutation',
     fields: {
       createUser: userType.createUser,
+      updateUser: userType.updateUser,
       createBand: bandType.createBand,
+      updateBand: bandType.updateBand,
       createArtist: artistType.createArtist
     }
   })

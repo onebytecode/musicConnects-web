@@ -56,8 +56,7 @@ module.exports = (server, chai, should, expect) => {
         .send({
           'band': {
             'id': '1',
-            'name': 'metallica updated',
-            'biography': 'metal group'
+            'name': 'metallica updated'
           }
         })
         .end((err, res) => {

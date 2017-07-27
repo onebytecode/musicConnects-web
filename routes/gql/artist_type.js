@@ -15,6 +15,7 @@ module.exports = (gql, controllers, types) => {
           surname: { type: gql.GraphQLString }
         }
       })},
+      fullName: { type: gql.GraphQLString },
       bands: { type: new gql.GraphQLInputObjectType({
         name: 'ArtistInputBands',
         fields: {
@@ -39,10 +40,7 @@ module.exports = (gql, controllers, types) => {
     const { naming, bands } = data
     const { error, model } = await models_controller.create({
       name: 'Artists'
-    }, {
-      naming: naming,
-      bands: bands
-    })
+    }, data)
     if (error) throw new Error(error)
     return model
   }

@@ -45,6 +45,7 @@ module.exports = (mongoose, autoIncrement) => {
     })
     .set(function(v) {
       const naming = v.split(/\s/)
+      console.log(naming);
       if (!naming) return
       this.naming.fName = naming[0]
       this.naming.sName = naming[1] ? naming[1] : ''

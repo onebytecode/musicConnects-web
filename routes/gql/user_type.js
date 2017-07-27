@@ -4,6 +4,16 @@ module.exports = (gql, controllers, types) => {
   const { models_controller } = controllers
   const { userType } = types
 
+  const cUserInput = new gql.GraphQLInputObjectType({
+    name: 'UserInput',
+    fields: {
+      id: { type: gql.GraphQLInt },
+      name: { type: new gql.GraphQLNonNull(gql.GraphQLString) },
+      age:  { type: gql.GraphQLString },
+      bands: { type: new gql.GraphQLList(gql.GraphQLInt) },
+      artists: { type: new gql.GraphQLList(gql.GraphQLInt) }
+    }
+  })
 
   const getFunc = async (id) => {
     const { error, model } = await models_controller.get({
@@ -15,15 +25,6 @@ module.exports = (gql, controllers, types) => {
     if (error) throw new Error(error)
     return model
   }
-  const cUserInput = new gql.GraphQLInputObjectType({
-    name: 'UserInput',
-    fields: {
-      name: { type: new gql.GraphQLNonNull(gql.GraphQLString) },
-      age:  { type: gql.GraphQLString },
-      bands: { type: new gql.GraphQLList(gql.GraphQLInt) },
-      artists: { type: new gql.GraphQLList(gql.GraphQLInt) }
-    }
-  })
 
   const createFunc = async (data) => {
     const { name, age, bands, artists } = data
@@ -35,6 +36,13 @@ module.exports = (gql, controllers, types) => {
       bands: bands,
       artists: artists
     })
+    if (error) throw new Error(error)
+    return model
+  }
+  const updateFunc = async (data) => {
+    const {error, model} = await models_controller.update({
+      name: 'Users'
+    }, data)
     if (error) throw new Error(error)
     return model
   }
@@ -57,9 +65,21 @@ module.exports = (gql, controllers, types) => {
     }
   }
 
+  const updateUser = {
+    type: userType,
+    args: {
+      data: { type: new gql.GraphQLNonNull(cUserInput) }
+    },
+    resolve: async function(_, {data}) {
+      const user = await updateFunc(data)
+      return user
+    }
+  }
+
   const model = {
     getUser: getUser,
-    createUser: createUser
+    createUser: createUser,
+    updateUser: updateUser
   }
 
   return model

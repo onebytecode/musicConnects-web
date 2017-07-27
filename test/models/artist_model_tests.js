@@ -7,7 +7,7 @@ module.exports = ({mongoose}, expect, should) => {
     it ('it should create artist', async () => {
       try {
         const artist = await Artist.create({ _id: 1, fullName: "John Bonzo Bonhem" })
-        expect(artist.fullName).to.be.equal('John \"Bonzo\" Bonhem')
+        expect(artist.fullName).to.be.equal('John Bonzo Bonhem')
       } catch (err) {
         throw new Error(err)
       }

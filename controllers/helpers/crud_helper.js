@@ -39,10 +39,16 @@ module.exports = () => {
     return new Promise((resolve, reject) => {
       const uParams = {}
       Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
-      model.findOneAndUpdate({ _id: params._id }, uParams, { new: true }, (err, doc) => {
-        if (err) reject(err)
-        callback(err, doc)
-        return resolve(doc)
+      params._id = params.id ? params.id : params._id
+      model.findOne({ _id: params._id }, async (err, doc) => {
+        if (err) {
+          reject(err)
+          return callback(err)
+        }
+        Object.keys(uParams).forEach((el) => { doc[el] = uParams[el] })
+        doc.save()
+        resolve(doc)
+        return callback(null, doc)
       })
     })
 

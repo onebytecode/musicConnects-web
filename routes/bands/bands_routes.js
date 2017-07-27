@@ -3,7 +3,7 @@ module.exports = (controller, params, res, method) => {
   if (params._id) { params._id = parseInt(params._id) }
 
   const getBand = () => {
-    controller.get(params, (err, band) => {
+    controller.get({ name: 'Bands' }, params, (err, band) => {
       if (err) return res.sendStatus(400)
       if (band) return res.send(band)
       res.sendStatus(404)
@@ -11,21 +11,22 @@ module.exports = (controller, params, res, method) => {
   }
 
   const createBand = () => {
-    controller.create(params, (err, doc) => {
+    controller.create({ name: 'Bands' }, params, (err, doc) => {
       if (err) return res.sendStatus(400)
       res.sendStatus(200)
     })
   }
 
   const updateBand = () => {
-    controller.update(params, (err, doc) => {
+    controller.update({ name: 'Bands' }, params, (err, doc) => {
       if (err) return res.sendStatus(400)
+      console.log(err, doc);
       res.sendStatus(200)
     })
   }
 
   const deleteBand = () => {
-    controller.delete(params, (err, doc) => {
+    controller.delete({ name: 'Bands' }, params, (err, doc) => {
       if (err) return res.sendStatus(400)
       res.sendStatus(200)
     })

@@ -1,5 +1,5 @@
 // REGISTRATIONS CONTROLLER
-module.exports = (users_controller, helpers, links) => {
+module.exports = (models_controller, helpers, links) => {
   const { tokens_helper, mail_helper } = helpers
 
   const registrateUserByEmail = (mail, cb) => {
@@ -14,9 +14,9 @@ module.exports = (users_controller, helpers, links) => {
     }
     const regLink = links.server_link + '/user/authorize?token=' + token
     mail_helper.sendMailToUser(mail, 'Tema', regLink, (err, msg) => {
-      console.log(err, msg);
+      
     })
-    users_controller.create(newUser, (err, data) => {
+    models_controller.create({ name: 'Users' }, newUser, (err, data) => {
       cb(err, data)
     })
   }

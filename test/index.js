@@ -25,7 +25,7 @@ describe('Testing models', () => {
   after( async () => {
     const a = db.mongoose.connections[0].collections
     if (a['bands']) await a['bands'].drop()
-    // if (a['users']) await a['users'].drop()
+    if (a['users']) await a['users'].drop()
     if (a['artists']) await a['artists'].drop()
     if (a['biographies']) await a['biographies'].drop()
   })

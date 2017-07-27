@@ -1,11 +1,33 @@
 // GQL TYPES
 
 module.exports = (gql) => {
+  const biographyType = new gql.GraphQLObjectType({
+    name: 'Biography',
+    fields: {
+      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
+      foundation: { type: new gql.GraphQLObjectType({
+        name: 'BioFoundation',
+        fields: {
+          date: { type: gql.GraphQLString },
+          story: { type: gql.GraphQLString }
+        }
+      })},
+      popularization: { type: new gql.GraphQLObjectType({
+        name: 'BioPop',
+        fields: {
+          date: { type: gql.GraphQLString },
+          story: { type: gql.GraphQLString }
+        }
+      })},
+      nowadays: { type: gql.GraphQLString }
+    }
+  })
   const bandType  =  new gql.GraphQLObjectType({
     name: 'Band',
     fields: {
       id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-      name: { type: gql.GraphQLString }
+      name: { type: gql.GraphQLString },
+      biography: { type: biographyType }
     }
   })
   const userType  =  new gql.GraphQLObjectType({
@@ -29,7 +51,9 @@ module.exports = (gql) => {
             surname: { type: gql.GraphQLString }
           }
         })
-      }
+      },
+      fullName: { type: gql.GraphQLString },
+      biography: { type: biographyType }
     }
   })
 
@@ -49,7 +73,8 @@ module.exports = (gql) => {
     fields: {
       id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
       name: { type: gql.GraphQLString },
-      subscribers: { type: new gql.GraphQLList(userType) }
+      subscribers: { type: new gql.GraphQLList(userType) },
+      biography: { type: biographyType }
     }
   })
 
@@ -71,7 +96,9 @@ module.exports = (gql) => {
             belong: { type: bandType }
           }
         })
-      }
+      },
+      fullName: { type: gql.GraphQLString },
+      biography: { type: biographyType }
     }
   })
 

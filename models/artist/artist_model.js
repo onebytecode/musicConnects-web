@@ -44,7 +44,7 @@ module.exports = (mongoose, autoIncrement) => {
     .get(function() {
       const fName = this.naming.firstName || ''
       const sName = this.naming.secondName || ''
-      const surname = '"' + this.naming.surname + '"' || ''
+      const surname = this.naming.surname || ''
       return fName + ' ' + surname + ' ' + sName
     })
     .set(function(name) {
