@@ -3,6 +3,7 @@ module.exports = () => {
     const { mParams, mPopulate } = params
     return new Promise((resolve, reject) => {
       if (mPopulate) {
+        mParams._id = mParams.id ? mParams.id : mParams._id
         model.findOne(mParams).populate(mPopulate).exec((err, _model) => {
           callback(err, _model)
           if (err) return reject(err)
@@ -10,14 +11,14 @@ module.exports = () => {
           return
         })
       } else {
-        model.findOne(mParams, (err, _model) => {
+        params._id = params.id ? params.id : params._id
+        model.findOne(params, (err, _model) => {
           callback(err, _model)
           if (err) return reject(err)
           resolve(_model)
           return
         })
       }
-
     })
 
   }
@@ -55,6 +56,7 @@ module.exports = () => {
   }
   const _delete  =  (model, params, callback = () => {}) => {
     return new Promise((resolve, reject) => {
+      params._id = params.id ? params.id : params._id
       model.findOneAndRemove({ _id: params._id }, (err, doc) => {
         if (err) reject(err)
         callback(err, doc)
