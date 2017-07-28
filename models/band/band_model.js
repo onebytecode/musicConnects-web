@@ -1,6 +1,7 @@
 // BAND MODEL
 module.exports = (mongoose, autoIncrement) => {
   const {Schema}  =  mongoose
+  /* define */
   const bandSchema = new Schema({
     _id: { type: Number, required: true },
     name: String,
@@ -15,29 +16,34 @@ module.exports = (mongoose, autoIncrement) => {
     artists: [{ type: Number, ref: 'Artist' }]
   })
 
+  /*  PLUGINS */
   bandSchema.plugin(autoIncrement.plugin, {
     model: 'Band',
     field: '_id',
     startAt: 1
   })
+
   const Biography = mongoose.connection.model('Biography')
 
-  bandSchema.pre('save', function (done) {
+  bandSchema.pre('save', function (next) {
     const self = this
     if(!this.biography) {
       Biography.create({}, (err, bio) => {
         if (err) throw new Error(err)
         self.biography = bio._id
-        done()
+        next()
       })
     }
   })
-  bandSchema.pre('findOne', function(done) {
+  bandSchema.pre('findOne', function(next) {
     this.populate('biography')
-    done()
+    next()
+  })
+  bandSchema.pre('update', function(next) {
+    this,populate('biography')
+    next()
   })
   const Band  =  mongoose.model('Band', bandSchema)
-
 
   return Band
 }

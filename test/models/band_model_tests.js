@@ -22,5 +22,17 @@ module.exports = ({mongoose}, expect, should) => {
         throw new Error(err)
       }
     })
+    it ('it should update band\'s biography through', async () => {
+      try {
+        const band = await Band.findOne({ _id: 1 })
+        const bio = band.biography
+        bio.foundation.date = new Date().getTime()
+        band.save()
+        expect(band.biography).to.be.a('object')
+        expect(bio.foundation.date).to.be.a('string')
+      } catch(err) {
+        throw new Error(err)
+      }
+    })
   })
 }
