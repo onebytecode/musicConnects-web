@@ -1,7 +1,7 @@
 // GQL BAND TYPE
 
 module.exports = (gql, controllers, types, typeConstructor) => {
-  const { bandType } = types
+  const { bandType, biographyInput } = types
   const BAND_TYPE = 'Bands'
   const BAND_POPULATE = 'subscribers'
 
@@ -9,8 +9,9 @@ module.exports = (gql, controllers, types, typeConstructor) => {
     name: 'BandInput',
     fields: {
       id: { type: gql.GraphQLInt },
-      name: { type: new gql.GraphQLNonNull(gql.GraphQLString)  },
-      subscribers: { type: new gql.GraphQLList(gql.GraphQLInt) }
+      name: { type: gql.GraphQLString },
+      subscribers: { type: new gql.GraphQLList(gql.GraphQLInt) },
+      biography: { type: biographyInput }
     }
   })
 

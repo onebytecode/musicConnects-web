@@ -4,7 +4,7 @@ module.exports = (gql) => {
   const biographyType = new gql.GraphQLObjectType({
     name: 'Biography',
     fields: {
-      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
+      id: { type: gql.GraphQLInt },
       foundation: { type: new gql.GraphQLObjectType({
         name: 'BioFoundation',
         fields: {
@@ -14,6 +14,28 @@ module.exports = (gql) => {
       })},
       popularization: { type: new gql.GraphQLObjectType({
         name: 'BioPop',
+        fields: {
+          date: { type: gql.GraphQLString },
+          story: { type: gql.GraphQLString }
+        }
+      })},
+      nowadays: { type: gql.GraphQLString }
+    }
+  })
+
+  const biographyInput = new gql.GraphQLInputObjectType({
+    name: 'BiographyInput',
+    fields: {
+      id: { type: gql.GraphQLInt },
+      foundation: { type: new gql.GraphQLInputObjectType({
+        name: 'BioFoundationInput',
+        fields: {
+          date: { type: gql.GraphQLString },
+          story: { type: gql.GraphQLString }
+        }
+      })},
+      popularization: { type: new gql.GraphQLInputObjectType({
+        name: 'BioPopInput',
         fields: {
           date: { type: gql.GraphQLString },
           story: { type: gql.GraphQLString }
@@ -105,7 +127,8 @@ module.exports = (gql) => {
   const types = {
     bandType: sBandType,
     userType: sUserType,
-    artistType: sArtistType
+    artistType: sArtistType,
+    biographyInput: biographyInput
   }
 
   return types

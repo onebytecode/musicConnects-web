@@ -3,6 +3,7 @@
 
 module.exports = ({mongoose}, expect, should) => {
   const Band = mongoose.connection.model('Band')
+  const Biography = mongoose.connection.model('Biography')
   describe('Band model tests', () => {
     it ('it should create band', async () => {
       try {
@@ -26,10 +27,15 @@ module.exports = ({mongoose}, expect, should) => {
       try {
         const band = await Band.findOne({ _id: 1 })
         const bio = band.biography
+        const bioId = bio._id
         bio.foundation.date = new Date().getTime()
         band.save()
         expect(band.biography).to.be.a('object')
         expect(bio.foundation.date).to.be.a('string')
+        const _bio = await Biography.findOne({ _id: bioId })
+        _bio.foundation.date = bio.foundation.date
+        _bio.save()
+        expect(_bio.foundation.date).to.be.a('string')
       } catch(err) {
         throw new Error(err)
       }

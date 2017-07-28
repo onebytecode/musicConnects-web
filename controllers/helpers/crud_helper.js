@@ -20,7 +20,6 @@ module.exports = () => {
         })
       }
     })
-
   }
   const create = (model, params, callback = () => {}) => {
     return new Promise((resolve, reject) => {
@@ -37,6 +36,8 @@ module.exports = () => {
 
   }
   const update  =  (model, params, callback = () => {}) => {
+    params = params.mParams ? params.mParams : params
+    
     return new Promise((resolve, reject) => {
       const uParams = {}
       Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
