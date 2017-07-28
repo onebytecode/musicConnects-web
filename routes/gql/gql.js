@@ -10,6 +10,7 @@ module.exports = (express, controllers) => {
   const bandType = require('./band_type')(gql, controllers, types, typeConstructor)
   const artistType = require('./artist_type')(gql, controllers, types, typeConstructor)
   const router = express.Router()
+
   const queryType = new gql.GraphQLObjectType({
     name: 'Query',
     fields: {
@@ -33,6 +34,7 @@ module.exports = (express, controllers) => {
       deleteArtist: artistType.deleteArtist
     }
   })
+  
   const schema = new gql.GraphQLSchema({query: queryType, mutation: mutationType})
 
   router.use('/', gqlHTTP({
