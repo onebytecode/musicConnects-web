@@ -1,7 +1,8 @@
 // GQL TYPES CONSTRUCTOR
 const gql      = require('graphql')
-module.exports = (modelType, cModelInput, mName, mPopulate = '', controllers) => {
+module.exports = (modelTypes, cModelInput, mName, mPopulate = '', controllers) => {
   const { models_controller } = controllers
+  const { getType, createType, deleteType, updateType } = modelTypes
 
   const getFunc = async (id) => {
     const {error, model} = await models_controller.get({
@@ -40,7 +41,7 @@ module.exports = (modelType, cModelInput, mName, mPopulate = '', controllers) =>
 
   /*      */
   const getModel = {
-    type: modelType,
+    type: getType,
     args: { id: { type: gql.GraphQLInt } },
     resolve: async function(_, {id}) {
       const model = await getFunc(id)
@@ -49,7 +50,7 @@ module.exports = (modelType, cModelInput, mName, mPopulate = '', controllers) =>
   }
 
   const createModel = {
-    type: modelType,
+    type: createType,
     args: {
       data: { type: new gql.GraphQLNonNull(cModelInput) }
     },
@@ -60,7 +61,7 @@ module.exports = (modelType, cModelInput, mName, mPopulate = '', controllers) =>
   }
 
   const updateModel = {
-    type: modelType,
+    type: updateType,
     args: {
       data: { type: new gql.GraphQLNonNull(cModelInput) }
     },
@@ -71,7 +72,7 @@ module.exports = (modelType, cModelInput, mName, mPopulate = '', controllers) =>
   }
 
   const deleteModel = {
-    type: modelType,
+    type: deleteType,
     args: {
       data: { type: new gql.GraphQLNonNull(cModelInput) }
     },

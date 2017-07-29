@@ -20,7 +20,7 @@ module.exports = (models, helpers) => {
     const p = { mParams: params }
     const keys = Object.keys(params)
     keys.forEach(k => { if (behavoursList[k]) {
-      p['behavour'] = {}
+      p['behavour'] = p['behavour'] || []
       const t = p['behavour']
       t['params'] = params[k]
       t['params']['__creator'] = params._id ? params._id : params.id

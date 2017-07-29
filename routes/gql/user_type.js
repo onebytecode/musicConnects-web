@@ -2,7 +2,7 @@
 
 module.exports = (gql, controllers, types, typeConstructor) => {
   const { models_controller } = controllers
-  const { userType } = types
+  const { userType, userPlainType } = types
   const USER_TYPE = 'Users'
   const USER_POPULATE = 'bands artists'
 
@@ -17,8 +17,15 @@ module.exports = (gql, controllers, types, typeConstructor) => {
     }
   })
 
-  const userConstructor = typeConstructor(userType, cUserInput, USER_TYPE, USER_POPULATE, controllers)
-  const getUser = userConstructor.get
+  const userQueries = {
+    getType: userType,
+    createType: userPlainType,
+    deleteType: userPlainType,
+    updateType: userType
+  }
+
+  const userConstructor = typeConstructor(userQueries, cUserInput, USER_TYPE, USER_POPULATE, controllers)
+  const getUser    = userConstructor.get
   const createUser = userConstructor.create
   const updateUser = userConstructor.update
   const deleteUser = userConstructor.delete
