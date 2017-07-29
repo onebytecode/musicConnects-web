@@ -35,26 +35,32 @@ module.exports = () => {
     })
 
   }
-  const update  =  (model, params, callback = () => {}) => {
+  const update  =  async (model, params, callback = () => {}) => {
+    const specialBehavour = params.behavour
     params = params.mParams ? params.mParams : params
-    
-    return new Promise((resolve, reject) => {
-      const uParams = {}
-      Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
-      params._id = params.id ? params.id : params._id
-      model.findOne({ _id: params._id }, async (err, doc) => {
-        if (err) {
-          reject(err)
-          return callback(err)
+    params._id = params.id ? params.id : params._id
+    const uParams = {}
+    Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
+    try {
+      const sParams = params._id ? { _id: params._id } : params.__creator ? { __creator: params.__creator } : params
+      const m = await model.findOne(sParams)
+      Object.keys(uParams).forEach(p => { m[p] = uParams[p] })
+      m.save()
+      if (specialBehavour) {
+        const a = specialBehavour.model
+        const b = specialBehavour.params
+        try {
+          await update(a, b)
+        } catch (err) {
+          throw new Error(err)
         }
-        Object.keys(uParams).forEach((el) => { doc[el] = uParams[el] })
-        doc.save()
-        resolve(doc)
-        return callback(null, doc)
-      })
-    })
-
+      }
+      return m
+    } catch (error) {
+      throw new Error(error)
+    }
   }
+
   const _delete  =  (model, params, callback = () => {}) => {
     return new Promise((resolve, reject) => {
       params._id = params.id ? params.id : params._id

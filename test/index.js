@@ -31,7 +31,7 @@ describe('Testing models', () => {
   })
 })
 describe('Testing controllers', () => {
-  require('./controllers')(controllers, should, expect)
+  require('./controllers')(controllers, db.mongoose, should, expect)
   after( async () => {
     const a = db.mongoose.connections[0].collections
     if (a['bands']) await a['bands'].drop()

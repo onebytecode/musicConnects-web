@@ -14,7 +14,8 @@ module.exports = (mongoose, autoIncrement) => {
       date: String,
       story: String
     },
-    nowadays: String
+    nowadays: String,
+    __creator: { type: Number, unique: true }
   })
 
   biographieschema.plugin(autoIncrement.plugin, {

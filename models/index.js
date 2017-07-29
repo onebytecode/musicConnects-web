@@ -14,7 +14,7 @@ module.exports = (db) => {
     return require('./user')(mongoose, autoIncrement)
   }
   const models = {
-    biographies: getBiographies(),
+    Biographies: getBiographies(),
     Artists: getArtists(),
     Users: getUsers(),
     Bands: getBands()
