@@ -47,6 +47,10 @@ app.use('/', routers(express, controllers, config.secrets).commonRouter)
 app.db.connect.then(
   success => {
     console.log(`Connection to db status ${success.status}`);
+    if (process.env.NODE_ENV === 'dev') {
+      console.log('Starting seeding...');
+      require('./scripts/seed')(db)
+    }
   }, error => {
     console.log(`Connection to db status ${error.status}`);
   }
@@ -57,5 +61,7 @@ app.listen(port, () => {
   logger(`Server running on :: ${port}`, '', 'GOOD')
   logger(`Node enviroment is ${ENV}`, '', 'GOOD')
 })
+
+
 
 module.exports = app
