@@ -89,7 +89,6 @@ module.exports = async (mongoose, options = { silent: false, amount: { users: 50
     await createUsers(User, userNames, usersAmount)
     console.log(green('Seeding complete'));
   } catch (err) {
-    return console.log(`CODE ${err.code}`);
     if (err.code === 11000) {
       return console.log('Seed already done');
     }

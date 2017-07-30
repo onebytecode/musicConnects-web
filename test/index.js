@@ -7,6 +7,7 @@ const chai         = require('chai')
 const chai_http    = require('chai-http')
 const should       = chai.should()
 const expect       = chai.expect
+const assert       = chai.assert
 const Promise      = require('bluebird')
 const drop_db      = require('../scripts/drop_db')
 const seed         = require('../scripts/seed')
@@ -47,7 +48,7 @@ describe('Testing graphql', () => {
   before (async () => {
     await seed(db.mongoose, { silent: true, amount: { bands: 10, users: 10, artists: 10 } })
   })
-  require('./graphql')(server, chai, expect)
+  require('./graphql')(server, chai, expect, assert)
   after (async () => {
     await drop_db(db.mongoose)
   })

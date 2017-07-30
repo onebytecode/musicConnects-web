@@ -1,6 +1,6 @@
 // USER MODEL GRAPHQL TESTS
 
-module.exports = (server, chai, expect) => {
+module.exports = (server, chai, expect, assert) => {
   describe('User gql ', () => {
     it('should get user with id and name fields', (done) => {
       chai.request(server)
@@ -25,11 +25,12 @@ module.exports = (server, chai, expect) => {
                          bands: [1, 2],
                          artists: [2, 3]
                         }) { id name age bands artists}} `
-        }).end((err, data) => {
-          console.log(data);
+        }).end((err, { body: { data: { createUser: u } } }) => {
           if (err) return done(err)
           expect(u.id).to.be.a('number')
-          expect(u.age).to.be.equal(29)
+          expect(u.age).to.be.equal('29')
+          assert(u.bands, [1, 2])
+          assert(u.artists, [2, 3])
           done()
         })
     })

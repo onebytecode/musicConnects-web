@@ -29,7 +29,10 @@ module.exports = (mongoose, autoIncrement) => {
     const self = this
     if(!this.biography) {
       Biography.create({ __creator: self._id }, (err, bio) => {
-        if (err) throw new Error(err)
+        if (err) {
+          const e = new Error(err)
+          next(err)
+        }
         self.biography = bio._id
         next()
       })
