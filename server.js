@@ -38,18 +38,15 @@ app.use(bodyParser.json({ type: 'application/json'}));
 app.set('trust proxy', 1)
 app.use(mcMiddleware.sessionMiddleware())
 app.use('/sess', (req, res, next) => mcMiddleware.sess(req, res, next))
-// app.use('/api', (req, res, next) => {
-//   require('./routes/authenticator')(req, res, next, config.secrets.secretToken)
-// })
-// app.use('/api', routers(express, controllers, config.secrets).api_v1)
 app.use('/', routers(express, controllers, config.secrets).commonRouter)
+
 /* DB CONNECTION */
 app.db.connect.then(
   success => {
     console.log(`Connection to db status ${success.status}`);
     if (process.env.NODE_ENV === 'dev') {
       console.log('Starting seeding...');
-      require('./scripts/seed')(db)
+      require('./scripts/seed')(db.mongoose)
     }
   }, error => {
     console.log(`Connection to db status ${error.status}`);

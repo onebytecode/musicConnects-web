@@ -7,11 +7,9 @@ module.exports = (server, chai, expect) => {
         .get('/gql')
         .send({
           query: `{ getUser(id: 1) { id name }}`
-        }).end((err, res) => {
+        }).end((err, { body : { data: { getUser: u } } }) => {
           if (err) done(err)
-          const d = res.data
-          expect(d).to.be.a('object')
-          console.log(d);
+          expect(u).to.be.a('object')
           done()
         })
     })

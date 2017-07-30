@@ -1,6 +1,8 @@
 // SCRIPT FOR SEED DATABASE
 
-module.exports = async ({mongoose}) => {
+module.exports = async (mongoose, options = { silent: false }) => {
+  const { silent } = options
+
   const Band = mongoose.connection.models['Band']
   const User = mongoose.connection.models['User']
   const Artist = mongoose.connection.models['Artist']
@@ -21,8 +23,8 @@ module.exports = async ({mongoose}) => {
   }
 
   Array.prototype.numberize = function(range, limit = 5) {
-    nums = []
-    r = []
+    const nums = []
+    const r = []
     for (let i = 0; i < range; i++) { r.push(i) }
     const repeats = parseInt(Math.random() * limit)
     for (let i = 0; i < repeats; i++ ) { nums.push(r[parseInt(Math.random() * range)]) }
@@ -31,7 +33,7 @@ module.exports = async ({mongoose}) => {
 
 
   const createBands = async (Band, bandNames, count) => {
-    console.log('Creating Bands');
+    if (!silent) console.log('Creating Bands');
     var c = 0
     while (c < count) {
       const band = await Band.create({
@@ -39,14 +41,14 @@ module.exports = async ({mongoose}) => {
         name: bandNames.shuffle(),
         subscribers: [].numberize(count)
       })
-      console.log('Created band ', band.name);
+      if (!silent) console.log('Created band ', band.name);
       c++
     }
     console.log('All bands created');
   }
 
   const createUsers = async (User, userNames, count) => {
-    console.log('Creating Users');
+    if (!silent) console.log('Creating Users');
     var c = 0
     while (c < count) {
       const user = await User.create({
@@ -55,14 +57,14 @@ module.exports = async ({mongoose}) => {
         bands: [].numberize(count),
         artists: [].numberize(count)
       })
-      console.log('Created user ', user.name);
+      if (!silent) console.log('Created user ', user.name);
       c++
     }
     console.log('All users created');
   }
 
   const createArtists = async (Artist, artistNames, count) => {
-    console.log('Creating Artists');
+    if(!silent) console.log('Creating Artists');
     var c = 0
     while (c < count) {
       const artist = await Artist.create({
@@ -72,7 +74,7 @@ module.exports = async ({mongoose}) => {
           belong: parseInt(Math.random() * count)
         }
       })
-      console.log('Created artist ', artist.fullName);
+      if(!silent) console.log('Created artist ', artist.fullName);
       c++
     }
     console.log('All artists created');

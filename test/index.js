@@ -8,6 +8,8 @@ const chai_http    = require('chai-http')
 const should       = chai.should()
 const expect       = chai.expect
 const Promise      = require('bluebird')
+const drop_db      = require('../scripts/drop_db')
+const seed         = require('../scripts/seed')
 
 chai.use(chai_http)
 
@@ -42,5 +44,11 @@ describe('Testing controllers', () => {
 })
 
 describe('Testing graphql', () => {
+  before (async () => {
+    await seed(db.mongoose, { silent: true })
+  })
   require('./graphql')(server, chai, expect)
+  after (async () => {
+    await drop_db(db.mongoose)
+  })
 })

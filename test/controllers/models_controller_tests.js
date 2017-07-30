@@ -119,7 +119,7 @@ module.exports  =  (models_controller, mongoose, should, expect) => {
         if (aCreation.error) throw new Error(aCreation.error)
         const { error, model } = await models_controller.get({name: 'Artists'}, { mParams: {
           _id: 1
-        }, mPopulate: { path: "bands.belong", model: 'Band' } })
+        }, mPopulate: { path: "bands.current", model: 'Band' } })
         if (error) throw new Error(error)
         expect(model.fullName).to.be.equal('Saul Slash Hudson')
         expect(model.bands.current).to.be.a('object')
