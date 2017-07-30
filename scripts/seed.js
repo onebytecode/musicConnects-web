@@ -5,9 +5,9 @@ module.exports = async ({mongoose}) => {
   const User = mongoose.connection.models['User']
   const Artist = mongoose.connection.models['Artist']
 
-  const bandNames = ['Some', 'Band']
-  const artistNames = ['Cool', 'Nega', 'John']
-  const userNames = ['Mao', 'Shaun', 'Walker']
+  const bandNames = ['Some', 'Band', 'Guns', 'Metal', 'Kambala', 'Dunai', 'Speed', 'Yummie', 'Crack', 'Gone', 'Bash', 'Slice']
+  const artistNames = ['Cool', 'Nega', 'John', 'BB', 'Rare', 'Daddy', 'Gerold', 'James', 'Winny', 'Smith', 'Baron', 'Semen']
+  const userNames = ['Mao', 'Shaun', 'Walker', 'Mick', 'Smile', 'Aden', 'Milestone', 'Mandatory', 'Post', 'Joy']
 
   Array.prototype.shuffle = function() {
     const shuffled = []
@@ -20,6 +20,15 @@ module.exports = async ({mongoose}) => {
     return shuffled.join(' ')
   }
 
+  Array.prototype.numberize = function(range, limit = 5) {
+    nums = []
+    r = []
+    for (let i = 0; i < range; i++) { r.push(i) }
+    const repeats = parseInt(Math.random() * limit)
+    for (let i = 0; i < repeats; i++ ) { nums.push(r[parseInt(Math.random() * range)]) }
+    return nums
+  }
+
 
   const createBands = async (Band, bandNames, count) => {
     console.log('Creating Bands');
@@ -27,7 +36,8 @@ module.exports = async ({mongoose}) => {
     while (c < count) {
       const band = await Band.create({
         _id: c,
-        name: bandNames.shuffle()
+        name: bandNames.shuffle(),
+        subscribers: [].numberize(count)
       })
       console.log('Created band ', band.name);
       c++
@@ -41,7 +51,9 @@ module.exports = async ({mongoose}) => {
     while (c < count) {
       const user = await User.create({
         _id: c,
-        name: userNames.shuffle()
+        name: userNames.shuffle(),
+        bands: [].numberize(count),
+        artists: [].numberize(count)
       })
       console.log('Created user ', user.name);
       c++
@@ -55,7 +67,10 @@ module.exports = async ({mongoose}) => {
     while (c < count) {
       const artist = await Artist.create({
         _id: c,
-        fullName: artistNames.shuffle()
+        fullName: artistNames.shuffle(),
+        bands: {
+          belong: parseInt(Math.random() * count)
+        }
       })
       console.log('Created artist ', artist.fullName);
       c++
@@ -65,9 +80,9 @@ module.exports = async ({mongoose}) => {
 
 
   try {
-    await createBands(Band, bandNames, 5)
-    await createArtists(Artist, artistNames, 5)
-    await createUsers(User, userNames, 5)
+    await createBands(Band, bandNames, 50)
+    await createArtists(Artist, artistNames, 50)
+    await createUsers(User, userNames, 50)
     console.log('Seeding complete');
   } catch (err) {
     if (err.code === 11000) {
