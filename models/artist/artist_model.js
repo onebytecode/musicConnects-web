@@ -11,7 +11,8 @@ module.exports = (mongoose, autoIncrement) => {
     additional_info: String,
     biography: { type: Number, ref: 'Biography' },
     bands: {
-      belong: { type: Number, ref: 'Band' }
+      current: { type: Number, ref: 'Band' },
+      all: [{ type: Number, ref: 'Band' }]
     }
   })
 
@@ -28,11 +29,11 @@ module.exports = (mongoose, autoIncrement) => {
       try {
         const bio = await Biography.create({})
         self.biography = bio._id
-        done()
       } catch (err) {
         throw new Error(err)
       }
     }
+    done()
   })
 
   artistSchema.pre('findOne', function(done) {

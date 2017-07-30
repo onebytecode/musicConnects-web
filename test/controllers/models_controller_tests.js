@@ -113,7 +113,7 @@ module.exports  =  (models_controller, should, expect) => {
             surname: 'Slash'
           },
           bands: {
-            belong: 1
+            current: 1
           }
         })
         if (aCreation.error) throw new Error(aCreation.error)
@@ -122,8 +122,8 @@ module.exports  =  (models_controller, should, expect) => {
         }, mPopulate: { path: "bands.belong", model: 'Band' } })
         if (error) throw new Error(error)
         expect(model.fullName).to.be.equal('Saul Slash Hudson')
-        expect(model.bands.belong).to.be.a('object')
-        expect(model.bands.belong.name).to.be.equal('Guns And Roses')
+        expect(model.bands.current).to.be.a('object')
+        expect(model.bands.current.name).to.be.equal('Guns And Roses')
       })
     })
   })

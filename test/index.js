@@ -40,3 +40,7 @@ describe('Testing controllers', () => {
     // if (a['biographies']) await a['biographies'].drop()
   })
 })
+
+describe('Testing graphql', () => {
+  require('./graphql')(server, chai, expect)
+})
