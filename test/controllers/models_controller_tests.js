@@ -1,5 +1,5 @@
 // MODELS CONTROLLER TESTS
-module.exports  =  (models_controller, should, expect) => {
+module.exports  =  (models_controller, mongoose, should, expect) => {
   describe('Models controller tests', () => {
     describe('Testing User Model interactions', () => {
       it('it should create User', done => {
@@ -124,6 +124,30 @@ module.exports  =  (models_controller, should, expect) => {
         expect(model.fullName).to.be.equal('Saul Slash Hudson')
         expect(model.bands.current).to.be.a('object')
         expect(model.bands.current.name).to.be.equal('Guns And Roses')
+      })
+    })
+    describe('Testing nested models interations', () => {
+      it('it should update bio through band', async () => {
+        let Biography = mongoose.connection.model('Biography')
+        let { error, model } = await models_controller.create({
+          name: 'Bands'
+        }, { name: "Some band", _id: 2 })
+        if (error) throw new Error(error)
+        let uBands = await models_controller.update({
+          name: 'Bands'
+        }, {
+          _id: 2,
+          biography: {
+            foundation: {
+              date: new Date().getTime().toString()
+            }
+          }
+        })
+        if (uBands.error) throw new Error(uBands.error)
+        expect(uBands.model.biography.foundation.date).to.be.a('string')
+        let gBands = await models_controller.get({ name: 'Bands' }, { _id: 2 })
+        if (gBands.error) throw new Error(gBands.error)
+        expect(gBands.model.biography.foundation.date).to.be.a('string')
       })
     })
   })

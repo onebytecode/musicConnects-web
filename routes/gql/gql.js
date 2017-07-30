@@ -4,11 +4,12 @@ const gqlHTTP  = require('express-graphql')
 
 module.exports = (express, controllers) => {
   const { users_controller } = controllers
-  const types = require('./types')(gql)
+  const mixins = require('./mixins')()
+  const types = require('./types')(gql, mixins)
   const { typeConstructor } = require('./helpers')()
-  const userType = require('./user_type')(gql, controllers, types, typeConstructor)
-  const bandType = require('./band_type')(gql, controllers, types, typeConstructor)
-  const artistType = require('./artist_type')(gql, controllers, types, typeConstructor)
+  const userType = require('./user_type')(gql, controllers, types, typeConstructor, mixins)
+  const bandType = require('./band_type')(gql, controllers, types, typeConstructor, mixins)
+  const artistType = require('./artist_type')(gql, controllers, types, typeConstructor, mixins)
   const router = express.Router()
 
   const queryType = new gql.GraphQLObjectType({
@@ -34,7 +35,7 @@ module.exports = (express, controllers) => {
       deleteArtist: artistType.deleteArtist
     }
   })
-  
+
   const schema = new gql.GraphQLSchema({query: queryType, mutation: mutationType})
 
   router.use('/', gqlHTTP({

@@ -3,12 +3,35 @@
 module.exports = (models, helpers) => {
   const { crud_helper }  =  helpers
   const modelNames = Object.keys(models)
+  const behavoursList = {
+    'biography': 'Biographies'
+  }
+
+  /*    */
+
   const defineModel = (name) => {
     const index = modelNames.indexOf(name)
     if (index === -1) return { error: new Error('No model with name ' + name), result: null }
     const model = models[name]
     return { error: null, result: model }
   }
+
+  const behavourize = (params) => {
+    const p = { mParams: params }
+    const keys = Object.keys(params)
+    keys.forEach(k => { if (behavoursList[k]) {
+      p['behavour'] = p['behavour'] || []
+      const t = p['behavour']
+      t['params'] = params[k]
+      t['params']['__creator'] = params._id ? params._id : params.id
+      t['model']  = models[behavoursList[k]]
+    }})
+
+    return p
+  }
+
+  /*    */
+
   const getModel  =  async (setup, params, callback = () => {}) => {
     const { name } = setup
     const defModel = defineModel(name)
@@ -50,6 +73,7 @@ module.exports = (models, helpers) => {
   const updateModel  =  async (setup, params, callback = () => {}) => {
     const { name } = setup
     const defModel = defineModel(name)
+    const p = behavourize(params)
     const { error, result } = defModel
     if (error) {
       callback(error)
@@ -57,7 +81,7 @@ module.exports = (models, helpers) => {
     }
     const _model = result
     try {
-      let model = await crud_helper.update(_model, params)
+      let model = await crud_helper.update(_model, p)
       callback(null, model)
       return { error: null, model: model }
     } catch(err) {

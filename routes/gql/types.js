@@ -1,42 +1,26 @@
 // GQL TYPES
 
-module.exports = (gql) => {
+module.exports = (gql, mixins) => {
+  const { bandMixins, userMixins, artistMixins, bioMixins } = mixins
+
   const biographyType = new gql.GraphQLObjectType({
     name: 'Biography',
-    fields: {
-      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-      foundation: { type: new gql.GraphQLObjectType({
-        name: 'BioFoundation',
-        fields: {
-          date: { type: gql.GraphQLString },
-          story: { type: gql.GraphQLString }
-        }
-      })},
-      popularization: { type: new gql.GraphQLObjectType({
-        name: 'BioPop',
-        fields: {
-          date: { type: gql.GraphQLString },
-          story: { type: gql.GraphQLString }
-        }
-      })},
-      nowadays: { type: gql.GraphQLString }
-    }
+    fields: bioMixins.objectType
   })
+
+  const biographyInput = new gql.GraphQLInputObjectType({
+    name: 'BiographyInput',
+    fields: bioMixins.inputType
+  })
+
   const bandType  =  new gql.GraphQLObjectType({
     name: 'Band',
-    fields: {
-      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-      name: { type: gql.GraphQLString },
-      biography: { type: biographyType }
-    }
+    fields: bandMixins.objectType
   })
+
   const userType  =  new gql.GraphQLObjectType({
     name: 'User',
-    fields: {
-      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-      name: { type: gql.GraphQLString },
-      age: { type: gql.GraphQLString }
-    }
+    fields: userMixins.objectType
   })
 
   const artistType = new gql.GraphQLObjectType({
@@ -70,12 +54,10 @@ module.exports = (gql) => {
 
   const sBandType = new gql.GraphQLObjectType({
     name: 'BandType',
-    fields: {
-      id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
-      name: { type: gql.GraphQLString },
+    fields: bandMixins.injectObject({
       subscribers: { type: new gql.GraphQLList(userType) },
       biography: { type: biographyType }
-    }
+    })
   })
 
   const sArtistType = new gql.GraphQLObjectType({
@@ -103,9 +85,13 @@ module.exports = (gql) => {
   })
 
   const types = {
-    bandType: sBandType,
+    userPlainType: userType,
     userType: sUserType,
-    artistType: sArtistType
+    bandPlainType: bandType,
+    bandType: sBandType,
+    artistPlainType: artistType,
+    artistType: sArtistType,
+    biographyInput: biographyInput
   }
 
   return types

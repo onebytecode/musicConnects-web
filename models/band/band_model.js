@@ -28,7 +28,7 @@ module.exports = (mongoose, autoIncrement) => {
   bandSchema.pre('save', function (next) {
     const self = this
     if(!this.biography) {
-      Biography.create({}, (err, bio) => {
+      Biography.create({ __creator: self._id }, (err, bio) => {
         if (err) throw new Error(err)
         self.biography = bio._id
         next()
@@ -40,7 +40,7 @@ module.exports = (mongoose, autoIncrement) => {
     next()
   })
   bandSchema.pre('update', function(next) {
-    this,populate('biography')
+    this.populate('biography')
     next()
   })
   const Band  =  mongoose.model('Band', bandSchema)

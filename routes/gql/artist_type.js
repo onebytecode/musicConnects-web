@@ -1,7 +1,7 @@
 //  GRAPH QL ARTIST TYPE
 
 module.exports = (gql, controllers, types, typeConstructor) => {
-  const { artistType } = types
+  const { artistType, artistPlainType } = types
   const ARTIST_TYPE = 'Artists'
   const ARTIST_POPULATE = { path: 'bands.belong', model: 'Band' }
 
@@ -26,7 +26,14 @@ module.exports = (gql, controllers, types, typeConstructor) => {
       })}
     }
   })
-  const artistConstructor = typeConstructor(artistType, cArtistInput, ARTIST_TYPE, ARTIST_POPULATE, controllers)
+
+  const artistQueries = {
+    getType: artistType,
+    createType: artistPlainType,
+    updateType: artistType,
+    deleteType: artistPlainType
+  }
+  const artistConstructor = typeConstructor(artistQueries, cArtistInput, ARTIST_TYPE, ARTIST_POPULATE, controllers)
 
   const getArtist = artistConstructor.get
   const createArtist = artistConstructor.create

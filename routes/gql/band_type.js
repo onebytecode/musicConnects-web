@@ -1,7 +1,8 @@
 // GQL BAND TYPE
 
-module.exports = (gql, controllers, types, typeConstructor) => {
-  const { bandType } = types
+module.exports = (gql, controllers, types, typeConstructor, mixins) => {
+  const { bandType, bandPlainType, biographyInput } = types
+  const { bandMixins } = mixins
   const BAND_TYPE = 'Bands'
   const BAND_POPULATE = 'subscribers'
 
@@ -9,14 +10,22 @@ module.exports = (gql, controllers, types, typeConstructor) => {
     name: 'BandInput',
     fields: {
       id: { type: gql.GraphQLInt },
-      name: { type: new gql.GraphQLNonNull(gql.GraphQLString)  },
-      subscribers: { type: new gql.GraphQLList(gql.GraphQLInt) }
+      name: { type: gql.GraphQLString },
+      subscribers: { type: new gql.GraphQLList(gql.GraphQLInt) },
+      biography: { type: biographyInput }
     }
   })
 
-  const bandConstructor = typeConstructor(bandType, cBandInput, BAND_TYPE, BAND_POPULATE, controllers)
+  const bandQueries = {
+    getType: bandType,
+    createType: bandPlainType,
+    updateType: bandType,
+    deleteType: bandPlainType
+  }
 
-  const getBand = bandConstructor.get
+  const bandConstructor = typeConstructor(bandQueries, cBandInput, BAND_TYPE, BAND_POPULATE, controllers)
+
+  const getBand    = bandConstructor.get
   const createBand = bandConstructor.create
   const updateBand = bandConstructor.update
   const deleteBand = bandConstructor.delete
