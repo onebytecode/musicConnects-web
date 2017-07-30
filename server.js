@@ -45,7 +45,6 @@ app.db.connect.then(
   success => {
     console.log(`Connection to db status ${success.status}`);
     if (process.env.NODE_ENV === 'dev') {
-      console.log('Starting seeding...');
       require('./scripts/seed')(db.mongoose)
     }
   }, error => {

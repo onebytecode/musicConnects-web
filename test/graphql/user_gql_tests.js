@@ -10,6 +10,8 @@ module.exports = (server, chai, expect) => {
         }).end((err, { body : { data: { getUser: u } } }) => {
           if (err) done(err)
           expect(u).to.be.a('object')
+          expect(u.name).to.be.a('string')
+          expect(u.id).to.be.equal(1)
           done()
         })
     })

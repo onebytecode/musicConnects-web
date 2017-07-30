@@ -45,7 +45,7 @@ describe('Testing controllers', () => {
 
 describe('Testing graphql', () => {
   before (async () => {
-    await seed(db.mongoose, { silent: true })
+    await seed(db.mongoose, { silent: true, amount: { bands: 10, users: 10, artists: 10 } })
   })
   require('./graphql')(server, chai, expect)
   after (async () => {
