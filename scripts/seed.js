@@ -1,11 +1,11 @@
 // SCRIPT FOR SEED DATABASE
-import { green } from 'colors'
+const { green } = require('colors')
 
 module.exports = async (mongoose, options = { silent: false, amount: { users: 50, artists: 50, bands: 50 } }) => {
   const { silent, amount: { users: usersAmount, artists: artistsAmount, bands: bandsAmount } } = options
 
-  const Band = mongoose.connection.models['Band']
-  const User = mongoose.connection.models['User']
+  const Band   = mongoose.connection.models['Band']
+  const User   = mongoose.connection.models['User']
   const Artist = mongoose.connection.models['Artist']
 
   const bandNames = ['Some', 'Band', 'Guns', 'Metal', 'Kambala', 'Dunai', 'Speed', 'Yummie', 'Crack', 'Gone', 'Bash', 'Slice']
@@ -89,6 +89,7 @@ module.exports = async (mongoose, options = { silent: false, amount: { users: 50
     await createUsers(User, userNames, usersAmount)
     console.log(green('Seeding complete'));
   } catch (err) {
+    return console.log(`CODE ${err.code}`);
     if (err.code === 11000) {
       return console.log('Seed already done');
     }

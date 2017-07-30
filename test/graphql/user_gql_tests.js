@@ -15,5 +15,23 @@ module.exports = (server, chai, expect) => {
           done()
         })
     })
+    it ('should create user', (done) => {
+      chai.request(server)
+        .post('/gql')
+        .send({
+          query: `mutation { createUser(data:
+                       { name: "Boris Tretiy",
+                         age: "1988",
+                         bands: [1, 2],
+                         artists: [2, 3]
+                        }) { id name age bands artists}} `
+        }).end((err, data) => {
+          console.log(data);
+          if (err) return done(err)
+          expect(u.id).to.be.a('number')
+          expect(u.age).to.be.equal(29)
+          done()
+        })
+    })
   })
 }
