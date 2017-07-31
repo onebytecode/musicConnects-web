@@ -27,7 +27,7 @@ module.exports = (mongoose, autoIncrement) => {
     const self = this
     if (!this.biography) {
       try {
-        const bio = await Biography.create({})
+        const bio = await Biography.create({ __creator: { kind: 'Artists', _id: self._id } })
         self.biography = bio._id
       } catch (err) {
         throw new Error(err)

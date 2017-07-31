@@ -34,5 +34,34 @@ module.exports = (server, chai, expect, assert) => {
           done()
         })
     })
+    it ('should update user', (done) => {
+      chai.request(server)
+        .post('/gql')
+        .send({
+          query: `mutation {
+            updateUser(data: {
+              id: 1,
+              name: "Updated User",
+              age: "1999 01 04",
+              bands: [1, 5],
+              artists: [4, 12, 46]
+            }) {
+              id
+              name
+              age
+              bands
+              artists
+            }
+          }`
+        }).end((err, data) => {
+          if (err) return done(err)
+          const { body: { data: { updateUser: u } } } = data
+          expect(u.id).to.be.equal(1)
+          assert(u.age, '18')
+          assert(u.bands, [1, 5])
+          assert(u.artists, [4, 12, 46])
+          done()
+        })
+    })
   })
 }

@@ -43,6 +43,7 @@ module.exports = () => {
     Object.keys(params).forEach((el) => { if (el === '_id') return; uParams[el] = params[el] })
     try {
       const sParams = params._id ? { _id: params._id } : params.__creator ? { __creator: params.__creator } : params
+      console.log(sParams);
       const m = await model.findOne(sParams)
       Object.keys(uParams).forEach(p => { m[p] = uParams[p] })
       m.save()

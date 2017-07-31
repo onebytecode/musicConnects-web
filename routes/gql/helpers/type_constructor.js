@@ -27,7 +27,7 @@ module.exports = (modelTypes, cModelInput, mName, mPopulate = '', controllers) =
     const { error, model } = await models_controller.update({
       name: mName
     }, data)
-    if (error) throw new Error(error)
+    if (error) return console.error(error);
     return model
   }
 

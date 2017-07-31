@@ -28,7 +28,7 @@ module.exports = (mongoose, autoIncrement) => {
   bandSchema.pre('save', function (next) {
     const self = this
     if(!this.biography) {
-      Biography.create({ __creator: self._id }, (err, bio) => {
+      Biography.create({ __creator: { kind: 'Bands', _id: self._id } }, (err, bio) => {
         if (err) {
           const e = new Error(err)
           next(err)

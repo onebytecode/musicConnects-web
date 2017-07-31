@@ -6,18 +6,14 @@ module.exports = async (mongoose, options = { silent: false }) => {
   const dropAll = async () => {
     Object.keys(mongoose.connection.collections).forEach( async (key) => {
       const model = mongoose.connection.collections[key]
-      try {
-        await model.drop()
-        return console.log('Model ' + key + ' successfully dropped!');
-      } catch(err) {
-        return console.error(err);
-      }
+      await model.drop()
+      return console.log('Model ' + key + ' successfully dropped!');
     })
   }
 
   try {
-    await dropAll()
-    console.log('Db dropped ');
+    const result = await dropAll()
+    console.log(result);
   } catch(err) {
     return console.error(err);
   }
