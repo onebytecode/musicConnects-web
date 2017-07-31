@@ -10,8 +10,11 @@ module.exports = (gql) => {
     artists: { type: new gql.GraphQLList(gql.GraphQLInt) }
   }
 
+  const { injectObject } = require('./helpers')({ objectType: objectType })
+
   const mixins = {
-    objectType: objectType
+    objectType: objectType,
+    injectObject: injectObject
   }
 
   return mixins

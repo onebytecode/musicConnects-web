@@ -6,11 +6,13 @@ module.exports = () => {
   const band = require('./band_mixins')(gql)
   const bio  = require('./bio_mixins')(gql)
   const user = require('./user_mixins')(gql)
+  const artist = require('./artist_mixins')(gql)
 
   const mixins = {
     bandMixins: band,
     bioMixins: bio,
-    userMixins: user
+    userMixins: user,
+    artistMixins: artist
   }
 
   return mixins
