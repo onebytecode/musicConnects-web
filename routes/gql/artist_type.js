@@ -21,7 +21,7 @@ module.exports = (gql, controllers, types, typeConstructor) => {
       bands: { type: new gql.GraphQLInputObjectType({
         name: 'ArtistInputBands',
         fields: {
-          belong: { type: gql.GraphQLInt }
+          current: { type: gql.GraphQLInt }
         }
       })}
     }
@@ -30,7 +30,7 @@ module.exports = (gql, controllers, types, typeConstructor) => {
   const artistQueries = {
     getType: artistType,
     createType: artistPlainType,
-    updateType: artistType,
+    updateType: artistPlainType,
     deleteType: artistPlainType
   }
   const artistConstructor = typeConstructor(artistQueries, cArtistInput, ARTIST_TYPE, ARTIST_POPULATE, controllers)

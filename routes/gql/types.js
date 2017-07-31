@@ -36,6 +36,14 @@ module.exports = (gql, mixins) => {
           }
         })
       },
+      bands: {
+        type: new gql.GraphQLObjectType({
+          name: 'ArtistBandsPlain',
+          fields: {
+            current: { type: gql.GraphQLInt }
+          }
+        })
+      },
       fullName: { type: gql.GraphQLString },
       biography: { type: biographyType }
     }
@@ -75,7 +83,7 @@ module.exports = (gql, mixins) => {
       bands: { type: new gql.GraphQLObjectType({
           name: 'ArtistBands',
           fields: {
-            belong: { type: bandType }
+            current: { type: bandType }
           }
         })
       },
