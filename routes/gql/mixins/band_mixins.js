@@ -13,8 +13,8 @@ module.exports = (gql) => {
   const { injectObject } = require('./helpers')({objectType: objectType})
 
   const mixins = {
-    objectType: objectType,
-    injectObject: injectObject
+    objectType,
+    injectObject
   }
 
   return mixins

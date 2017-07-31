@@ -1,30 +1,17 @@
 //  GRAPH QL ARTIST TYPE
 
-module.exports = (gql, controllers, types, typeConstructor) => {
-  const { artistType, artistPlainType } = types
+module.exports = (gql, controllers, types, typeConstructor, { artistMixins }) => {
+  const { artistType, artistPlainType, biographyType } = types
   const ARTIST_TYPE = 'Artists'
   const ARTIST_POPULATE = { path: 'bands.belong', model: 'Band' }
 
+  const { injectInput } = artistMixins
+
   const cArtistInput = new gql.GraphQLInputObjectType({
     name: 'ArtistInput',
-    fields: {
-      id: { type: gql.GraphQLInt },
-      naming: { type: new gql.GraphQLInputObjectType({
-        name: 'ArtistInputNaming',
-        fields: {
-          firstName: { type: gql.GraphQLString },
-          secondName: { type: gql.GraphQLString },
-          surname: { type: gql.GraphQLString }
-        }
-      })},
-      fullName: { type: gql.GraphQLString },
-      bands: { type: new gql.GraphQLInputObjectType({
-        name: 'ArtistInputBands',
-        fields: {
-          current: { type: gql.GraphQLInt }
-        }
-      })}
-    }
+    fields: injectInput({
+      biography: { type: biographyType }
+    })
   })
 
   const artistQueries = {

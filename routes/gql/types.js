@@ -2,8 +2,8 @@
 
 module.exports = (gql, mixins) => {
   const { bandMixins, userMixins, artistMixins, bioMixins } = mixins
-  const TYPES = { }
 
+  /*  PLAIN TYPES */
   const biographyType = new gql.GraphQLObjectType({
     name: 'Biography',
     fields: bioMixins.objectType
@@ -29,13 +29,7 @@ module.exports = (gql, mixins) => {
     fields: artistMixins.objectType
   })
 
-  const mTypes = {
-    artist: artistType,
-    user: userType,
-    band: bandType,
-    bio: biographyType
-  }
-
+  /* SMART TYPES */
   const sUserType = new gql.GraphQLObjectType({
     name: 'UserType',
     fields: userMixins.injectObject({
@@ -73,7 +67,7 @@ module.exports = (gql, mixins) => {
     bandType: sBandType,
     artistPlainType: artistType,
     artistType: sArtistType,
-    biographyInput: biographyInput
+    biographyInput
   }
 
   return types

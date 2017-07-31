@@ -8,6 +8,21 @@ module.exports = (gql) => {
     surname: { type: gql.GraphQLString }
   }
 
+  const inputType = {
+    id: { type: gql.GraphQLInt },
+    naming: { type: new gql.GraphQLInputObjectType({
+      name: 'ArtistInputNaming',
+      fields: naming
+    })},
+    fullName: { type: gql.GraphQLString },
+    bands: { type: new gql.GraphQLInputObjectType({
+      name: 'ArtistInputBands',
+      fields: {
+        current: { type: gql.GraphQLInt }
+      }
+    })}
+  }
+
   const objectType = {
     id: { type: new gql.GraphQLNonNull(gql.GraphQLInt) },
     naming: { type: new gql.GraphQLObjectType({
@@ -27,11 +42,13 @@ module.exports = (gql) => {
     biography: { type: gql.GraphQLInt }
   }
 
-  const { injectObject } = require('./helpers')({objectType: objectType})
+  const { injectObject, injectInput } = require('./helpers')({objectType: objectType, inputType: inputType })
 
   const mixins = {
-    objectType: objectType,
-    injectObject: injectObject
+    objectType,
+    inputType,
+    injectObject,
+    injectInput
   }
 
   return mixins
