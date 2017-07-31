@@ -57,7 +57,35 @@ module.exports = (server, chai, expect, assert) => {
           if (err) return done(err)
           const { body: { data: { updateUser: u } } } = data
           expect(u.id).to.be.equal(1)
+          assert(u.name, 'Updated User')
           assert(u.age, '18')
+          assert(u.bands, [1, 5])
+          assert(u.artists, [4, 12, 46])
+          done()
+        })
+    })
+    it ('should delete user', done => {
+      chai.request(server)
+        .post('/gql')
+        .send({
+          query: `mutation {
+          deleteUser(data: {
+            id: 1
+          }) {
+            id
+            name
+            age
+            bands
+            artists
+          }}`
+        }).end((err, res) => {
+          if (err) {
+            return done(new Error(err.response.text))
+          }
+          const { body: { data: { deleteUser: u }}} = res
+          assert(u.id, 1)
+          assert(u.name, 'Updated User')
+          assert(u.age, 18),
           assert(u.bands, [1, 5])
           assert(u.artists, [4, 12, 46])
           done()

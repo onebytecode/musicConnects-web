@@ -1,24 +1,26 @@
 // SCRIPT FOR DROP DB
 
+const { green } = require('colors')
 module.exports = async (mongoose, options = { silent: false }) => {
   const { silent } = options
 
   const dropAll = async () => {
     Object.keys(mongoose.connection.collections).forEach( async (key) => {
       const model = mongoose.connection.collections[key]
-      try {
-        console.log(model.name);
-        if (model.name === 'identitycounters') return // 
-        await model.remove({})
-        return console.log('Model ' + key + ' successfully dropped!');
-      } catch (e) {
-        if (e.code === 26) return true // ns not found error
-        return console.error(e);
-      }
+      if (model.name === 'identitycounters') return '' //
+      await model.remove({})
+      return 'Model ' + key + ' successfully dropped!'
     })
   }
 
-  const result = await dropAll()
-  console.log(result);
+  try {
+    const result = await dropAll()
+    if (!silent) {
+      return console.log(result);
+    }
+    console.log(green('All models successfully dropped!'));
+  } catch (e) {
+    console.error(e);
+  }
 
 }

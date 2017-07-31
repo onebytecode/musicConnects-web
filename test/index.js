@@ -26,13 +26,13 @@ describe('Testing db', () => {
 describe('Testing models', () => {
   require('./models')(db, expect, should)
   after(async () => {
-    await drop_db(db.mongoose)
+    await drop_db(db.mongoose, { silent: true })
   })
 })
 describe('Testing controllers', () => {
   require('./controllers')(controllers, db.mongoose, should, expect)
   after( async () => {
-    await drop_db(db.mongoose)
+    await drop_db(db.mongoose, { silent: true })
   })
 })
 
@@ -42,6 +42,6 @@ describe('Testing graphql', () => {
   })
   require('./graphql')(server, chai, expect, assert)
   after (async () => {
-    await drop_db(db.mongoose)
+    await drop_db(db.mongoose, { silent: true })
   })
 })
