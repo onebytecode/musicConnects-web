@@ -19,7 +19,7 @@ module.exports = (gql, controllers, types, typeConstructor, mixins) => {
   const bandQueries = {
     getType: bandType,
     createType: bandPlainType,
-    updateType: bandType,
+    updateType: bandPlainType,
     deleteType: bandPlainType
   }
 
