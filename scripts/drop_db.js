@@ -6,16 +6,19 @@ module.exports = async (mongoose, options = { silent: false }) => {
   const dropAll = async () => {
     Object.keys(mongoose.connection.collections).forEach( async (key) => {
       const model = mongoose.connection.collections[key]
-      await model.drop()
-      return console.log('Model ' + key + ' successfully dropped!');
+      try {
+        console.log(model.name);
+        if (model.name === 'identitycounters') return // 
+        await model.remove({})
+        return console.log('Model ' + key + ' successfully dropped!');
+      } catch (e) {
+        if (e.code === 26) return true // ns not found error
+        return console.error(e);
+      }
     })
   }
 
-  try {
-    const result = await dropAll()
-    console.log(result);
-  } catch(err) {
-    return console.error(err);
-  }
+  const result = await dropAll()
+  console.log(result);
 
 }

@@ -21,7 +21,7 @@ module.exports = (gql, controllers, types, typeConstructor) => {
     getType: userType,
     createType: userPlainType,
     deleteType: userPlainType,
-    updateType: userType
+    updateType: userPlainType
   }
 
   const userConstructor = typeConstructor(userQueries, cUserInput, USER_TYPE, USER_POPULATE, controllers)
