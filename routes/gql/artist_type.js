@@ -1,7 +1,7 @@
 //  GRAPH QL ARTIST TYPE
 
 module.exports = (gql, controllers, types, typeConstructor, { artistMixins }) => {
-  const { artistType, artistPlainType, biographyType } = types
+  const { artistType, artistPlainType, biographyInput } = types
   const ARTIST_TYPE = 'Artists'
   const ARTIST_POPULATE = { path: 'bands.belong', model: 'Band' }
 
@@ -10,7 +10,7 @@ module.exports = (gql, controllers, types, typeConstructor, { artistMixins }) =>
   const cArtistInput = new gql.GraphQLInputObjectType({
     name: 'ArtistInput',
     fields: injectInput({
-      biography: { type: biographyType }
+      biography: { type: biographyInput }
     })
   })
 
