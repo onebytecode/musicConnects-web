@@ -2,7 +2,7 @@ const GET            =  'GET'
 const POST           =  'POST'
 const DELETE         =  'DELETE'
 const PUT            =  'PUT'
-const gqlModule = require('./gql')
+const gqlModule = require('../mc_middleware')().gql
 const apiAuthenticator = require('./authenticator')
 
 module.exports = (express, controllers, secrets) => {
